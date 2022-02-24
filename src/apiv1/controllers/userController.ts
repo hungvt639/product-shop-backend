@@ -1,11 +1,11 @@
 import { Req, Res } from "../interfaces/Express";
 import bcrypt from "bcrypt";
-import UserModel from "../models/userModel";
 import jwt from "jsonwebtoken";
-import Config from "../config/const";
+import Config from "../../config/const";
 import { SchemaDefinitionProperty } from "mongoose";
 import HttpResponse from "../utils/response";
 import { _setOption } from "../utils/functions";
+import UserModel from "../models/userModel";
 
 interface DataLoginInterface {
     username: String;

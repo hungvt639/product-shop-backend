@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import Config from "../config/const";
+import Config from "../../config/const";
 import { Next, Req, Res } from "../interfaces/Express";
 import UserModel, { UserInterface } from "../models/userModel";
 import HttpResponse from "../utils/response";

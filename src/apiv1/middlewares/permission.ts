@@ -1,7 +1,6 @@
 import { Req, Res, Next } from "../interfaces/Express";
 import UserModel, { UserInterface } from "../models/userModel";
 import HttpResponse from "../utils/response";
-import auth from "../middlewares/authentication";
 
 function _hasPermission(user: UserInterface | undefined, permission: string) {
     if (user?.permission.includes(permission)) return true;

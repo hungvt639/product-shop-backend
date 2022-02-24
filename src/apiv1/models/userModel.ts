@@ -1,5 +1,5 @@
 import mongoose, { SchemaDefinitionProperty, ObjectId } from "mongoose";
-import Config from "../config/const";
+import Config from "../../config/const";
 
 const Schema = mongoose.Schema;
 

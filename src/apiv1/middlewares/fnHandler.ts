@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import Config from "../config/const";
+import Config from "../../config/const";
 import { Req, Res, Next } from "../interfaces/Express";
 import { _removeAccents } from "../utils/functions";
 
