@@ -1,5 +1,5 @@
 import mongoose, { SchemaDefinitionProperty, ObjectId } from "mongoose";
-import Config from "../../config/const";
+import Const from "../../config/const";
 
 const Schema = mongoose.Schema;
 
@@ -38,7 +38,7 @@ const User = new Schema<UserInterface>(
         },
         password: { type: String, required: true, maxlength: 2000 },
         fullname: String,
-        avatar: { type: String, default: Config.AVATAR_DEFAULT },
+        avatar: { type: String, default: Const.AVATAR_DEFAULT },
         permission: [{ type: String, default: Permission.USER }],
     },
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
