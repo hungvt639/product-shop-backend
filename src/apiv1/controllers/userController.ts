@@ -1,7 +1,7 @@
 import { Req, Res } from "../interfaces/Express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import Const from "../../config/const";
+import env from "../../config/env";
 import { SchemaDefinitionProperty } from "mongoose";
 import HttpResponse from "../utils/response";
 import { _setOption } from "../utils/functions";
@@ -52,7 +52,7 @@ async function login(req: Req, res: Res) {
             username: user.username,
             name: user.fullname,
         },
-        Const.SECRET
+        env.SECRET
     );
     user.password = "";
     HttpResponse.ok(res, {

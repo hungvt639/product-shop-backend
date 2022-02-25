@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import Const from "../../config/const";
+import env from "../../config/env";
 import { Req, Res, Next } from "../interfaces/Express";
 import { _removeAccents } from "../utils/functions";
 
@@ -9,8 +9,8 @@ export default (fn: FnRequestHandler): RequestHandler =>
     (req: Req, res: Res, next: Next) => {
         const { method } = req;
         if (method === "GET") {
-            const page = req.query.page || Const.PAGE_DEFAULT;
-            const limit = req.query.limit || Const.LIMIT_DEFAULT;
+            const page = req.query.page || env.PAGE_DEFAULT;
+            const limit = req.query.limit || env.LIMIT_DEFAULT;
             const search = req.query.search
                 ? _removeAccents(req.query.search as string)
                 : "";
