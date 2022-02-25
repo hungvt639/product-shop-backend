@@ -8,5 +8,5 @@
         "outDir": "dist"
     },
     "lib": ["es2015"],
-    "files": ["src/interfaces/custom.d.ts"]
+    "files": ["src/apiv1/interfaces/custom.d.ts"]
 }
