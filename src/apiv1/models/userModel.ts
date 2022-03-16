@@ -19,7 +19,9 @@ export interface UserInterface {
     password: SchemaDefinitionProperty<{ type: String; required: true }>;
     fullname?: String;
     avatar?: SchemaDefinitionProperty<String>;
+    isActivate: boolean;
     permission: SchemaDefinitionProperty<{ type: String; required: true }>[];
+    timeResetPassword?: Number;
 }
 
 interface UserModelMethod {
@@ -39,7 +41,9 @@ const User = new Schema<UserInterface>(
         password: { type: String, required: true, maxlength: 2000 },
         fullname: String,
         avatar: { type: String, default: env.AVATAR_DEFAULT },
+        isActivate: { type: Boolean, default: false },
         permission: [{ type: String, default: Permission.USER }],
+        timeResetPassword: Number,
     },
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );

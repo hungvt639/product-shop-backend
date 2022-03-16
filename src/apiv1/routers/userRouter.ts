@@ -7,6 +7,7 @@ import { _Admin, _SuperAdmin, _User } from "../middlewares/permission";
 const UserRouter = Router();
 
 UserRouter.post("/register", fn(UserController.register));
+UserRouter.post("/activate-user", fn(UserController.activateUser));
 UserRouter.post("/login", fn(UserController.login));
 UserRouter.get("/profile", auth, fn(UserController.getProfile));
 UserRouter.post(
@@ -25,5 +26,7 @@ UserRouter.get("/users", auth, _Admin, fn(UserController.getListUser));
 UserRouter.get("/user/:id", auth, _Admin, fn(UserController.getUser));
 UserRouter.put("/edit-profile", auth, _User, fn(UserController.editProfile));
 UserRouter.put("/change-password", auth, fn(UserController.changePassword));
+UserRouter.post("/send-reset-password", fn(UserController.sendResetPassword));
+UserRouter.post("/reset-password", fn(UserController.resetPassword));
 
 export default UserRouter;
