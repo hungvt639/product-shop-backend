@@ -5,7 +5,7 @@ import ApiV1 from "./apiv1/routers";
 import express from "express";
 import morgan from "morgan";
 import * as path from "path";
-import connect from "./apiv1/config/mongodb";
+import connect from "./config/mongodb";
 import bodyParser from "body-parser";
 import env from "./config/env";
 import cors from "cors";
