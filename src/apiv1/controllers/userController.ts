@@ -4,22 +4,16 @@ import jwt from "jsonwebtoken";
 import env from "../../config/env";
 import { SchemaDefinitionProperty } from "mongoose";
 import HttpResponse from "../utils/response";
-import { _setOption } from "../utils/functions";
-import UserModel from "../models/userModel";
+import { setOption } from "../utils/functions";
+import UserModel, { User } from "../models/userModel";
 import SendMail from "../utils/sendEmail";
-
-interface DataLoginInterface {
-    username: String;
-    password: String;
-}
+import GroupModel, { GROUP } from "../models/groupModel";
 
 async function register(req: Req, res: Res) {
-    const data = req.body;
-    const salt = bcrypt.genSaltSync(10);
-    data.password = bcrypt.hashSync(data.password, salt);
+    const data = new User(req.body);
+    const group = await GroupModel.findOne({ code: GROUP.user.code });
     const user = await UserModel.create(data);
-    user.permission.push(UserModel.permission.USER);
-
+    user.groups.push(group._id);
     const token = jwt.sign(
         {
             _id: user._id,
@@ -32,16 +26,16 @@ async function register(req: Req, res: Res) {
     );
 
     await SendMail({
-        to: data.email,
+        to: data.email as string,
         subject: "Kích hoạt tài khoản!",
         template: "activate-user",
         context: {
-            fullname: data.fullname,
+            fullname: data.fullname as string,
             href: `${env.FRONTEND}/${env.ROUTER_ACTIVATE_USER}?${env.KEY_ACTIVATE_USER}=${token}`,
         },
     });
 
-    user.save();
+    await user.save();
     user.password = "";
     HttpResponse.ok(res, user);
 }
@@ -71,8 +65,8 @@ async function activateUser(req: Req, res: Res) {
 }
 
 async function login(req: Req, res: Res) {
-    const data: DataLoginInterface = req.body;
-    if (!data.username || !data.password) {
+    const { username, password } = req.body;
+    if (!username || !password) {
         return HttpResponse.badRequest(
             res,
             "Vui lòng điền đầy đủ tài khoản mật khẩu"
@@ -80,7 +74,7 @@ async function login(req: Req, res: Res) {
     }
     const user = await UserModel.findOne(
         {
-            username: data.username as SchemaDefinitionProperty<{
+            username: username as SchemaDefinitionProperty<{
                 type: String;
                 required: true;
             }>,
@@ -94,7 +88,7 @@ async function login(req: Req, res: Res) {
     if (!user.isActivate) {
         return HttpResponse.badRequest(res, "Tài khoản chưa được kích hoạt");
     }
-    const match = await bcrypt.compare(data.password, user.password);
+    const match = await bcrypt.compare(password, user.password);
     if (!match) {
         return HttpResponse.badRequest(res, "Sai tên tài khoản hoặc mật khẩu!");
     }
@@ -120,12 +114,12 @@ async function getProfile(req: Req, res: Res) {
 
 async function addPermission(req: Req, res: Res) {
     const { permission, id } = req.body;
-    if (permission === UserModel.permission.SUPER_ADMIN) {
-        return HttpResponse.badRequest(
-            res,
-            "Không thế thay đổi quyền SUPER ADMIN"
-        );
-    }
+    // if (permission === UserModel.permission.SUPER_ADMIN) {
+    //     return HttpResponse.badRequest(
+    //         res,
+    //         "Không thế thay đổi quyền SUPER ADMIN"
+    //     );
+    // }
     if (!UserModel.verifyPermission(permission)) {
         return HttpResponse.badRequest(res, "Quyền này không tồn tại");
     }
@@ -133,25 +127,25 @@ async function addPermission(req: Req, res: Res) {
         { _id: id },
         "_id fullname permission"
     );
-    if (user.permission.includes(permission)) {
-        return HttpResponse.badRequest(
-            res,
-            `Tài khoản này đã được phân quyền ${permission}`
-        );
-    }
-    user.permission.push(permission);
+    // if (user.permission.includes(permission)) {
+    //     return HttpResponse.badRequest(
+    //         res,
+    //         `Tài khoản này đã được phân quyền ${permission}`
+    //     );
+    // }
+    // user.permission.push(permission);
     user.save();
     HttpResponse.ok(res, user);
 }
 
 async function removePermission(req: Req, res: Res) {
     const { permission, id } = req.body;
-    if (permission === UserModel.permission.SUPER_ADMIN) {
-        return HttpResponse.badRequest(
-            res,
-            "Không thế thay đổi quyền SUPER ADMIN"
-        );
-    }
+    // if (permission === UserModel.permission.SUPER_ADMIN) {
+    //     return HttpResponse.badRequest(
+    //         res,
+    //         "Không thế thay đổi quyền SUPER ADMIN"
+    //     );
+    // }
     if (!UserModel.verifyPermission(permission)) {
         return HttpResponse.badRequest(res, "Quyền này không tồn tại");
     }
@@ -169,9 +163,9 @@ async function getListUser(req: Req, res: Res) {
     const select = req.query.select || "_id fullname username";
     const { _id, username, fullname } = req.query;
     let filter: any = {};
-    _setOption(filter, "_id", _id);
-    _setOption(filter, "username", username);
-    _setOption(filter, "fullname", fullname, true);
+    setOption(filter, "_id", _id);
+    setOption(filter, "username", username);
+    setOption(filter, "fullname", fullname, true);
     const users = await UserModel.find(filter, select);
     HttpResponse.ok(res, users);
 }
@@ -186,8 +180,8 @@ async function getUser(req: Req, res: Res) {
 async function editProfile(req: Req, res: Res) {
     const { fullname, avatar } = req.body;
     let update: any = {};
-    _setOption(update, "fullname", fullname);
-    _setOption(update, "avatar", avatar);
+    setOption(update, "fullname", fullname);
+    setOption(update, "avatar", avatar);
     const user = await UserModel.findByIdAndUpdate(req.user._id, update, {
         new: true,
     });

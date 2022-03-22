@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import env from "../../config/env";
 import { Next, Req, Res } from "../interfaces/Express";
-import UserModel, { UserInterface } from "../models/userModel";
+import UserModel, { User } from "../models/userModel";
 import HttpResponse from "../utils/response";
 
 const auth = (req: Req, res: Res, next: Next) => {
@@ -18,12 +18,12 @@ const auth = (req: Req, res: Res, next: Next) => {
     } else {
         jwt.verify(tokens[1], env.SECRET, async (err, payload) => {
             if (payload) {
-                await UserModel.findById(
+                await UserModel.getProfile(
                     payload._id,
-                    "_id email username password fullname avatar permission"
+                    "_id email username fullname avatar"
                 )
                     .exec()
-                    .then((user: UserInterface) => {
+                    .then((user: User) => {
                         req.user = user;
                         next();
                     })

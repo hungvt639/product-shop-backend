@@ -1,20 +1,17 @@
-export function _getContentFromHtml(str: string) {
-    return str
-        .replace(/<\/[^>]+>/g, "")
-        .replace(/<[^>]+>/g, " ")
-        .replace(/\s\s+/g, " ")
-        .trim();
-}
+import { PER, Permission } from "../models/permissionModel";
 
-export function _removeAccents(str: string) {
+export function convertCode(str: string) {
     return str
         .normalize("NFD")
+        .trim()
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/đ/g, "d")
-        .replace(/Đ/g, "D");
+        .replace(/Đ/g, "D")
+        .replace(/\s+/g, " ")
+        .toLowerCase();
 }
 
-export function _setOption(obj: any, key: string, value: any, regex = false) {
+export function setOption(obj: any, key: string, value: any, regex = false) {
     if (value && key) {
         if (regex) {
             obj[key] = { $regex: value, $options: "i" };
@@ -22,4 +19,22 @@ export function _setOption(obj: any, key: string, value: any, regex = false) {
             obj[key] = value;
         }
     }
+}
+
+export function generatePermission(PERMISSIONs: typeof PER): Permission[] {
+    let permissions: Permission[] = [];
+    for (const permission in PERMISSIONs) {
+        permissions.push({
+            code: permission,
+            name: wordUpFirst(permission.replace("_", " ")),
+        });
+    }
+    return permissions;
+}
+
+export function wordUpFirst(str: string) {
+    return str
+        .split(" ")
+        .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+        .join(" ");
 }

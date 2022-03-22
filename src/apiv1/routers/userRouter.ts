@@ -1,32 +1,39 @@
 import UserController from "../controllers/userController";
-import fn from "../middlewares/fnHandler";
 import { Router } from "express";
 import auth from "../middlewares/authentication";
-import { _Admin, _SuperAdmin, _User } from "../middlewares/permission";
+import { PER } from "../models/permissionModel";
+import { _per } from "../middlewares/permission";
 
 const UserRouter = Router();
 
-UserRouter.post("/register", fn(UserController.register));
-UserRouter.post("/activate-user", fn(UserController.activateUser));
-UserRouter.post("/login", fn(UserController.login));
-UserRouter.get("/profile", auth, fn(UserController.getProfile));
-UserRouter.post(
-    "/add-permisstion",
+UserRouter.post("/register", _per(UserController.register));
+UserRouter.post("/activate-user", _per(UserController.activateUser));
+UserRouter.post("/login", _per(UserController.login));
+UserRouter.get(
+    "/profile",
     auth,
-    _SuperAdmin,
-    fn(UserController.addPermission)
+    _per(UserController.getProfile, PER.view_user)
 );
-UserRouter.post(
-    "/remove-permisstion",
+// UserRouter.post("/add-permisstion", auth, _per(UserController.addPermission));
+// UserRouter.post(
+//     "/remove-permisstion",
+//     auth,
+//     _per(UserController.removePermission)
+// );
+UserRouter.get("/users", auth, _per(UserController.getListUser, PER.view_user));
+
+UserRouter.get("/user/:id", auth, _per(UserController.getUser, PER.view_user));
+UserRouter.put(
+    "/edit-profile",
     auth,
-    _SuperAdmin,
-    fn(UserController.removePermission)
+    _per(UserController.editProfile, PER.edit_user)
 );
-UserRouter.get("/users", auth, _Admin, fn(UserController.getListUser));
-UserRouter.get("/user/:id", auth, _Admin, fn(UserController.getUser));
-UserRouter.put("/edit-profile", auth, _User, fn(UserController.editProfile));
-UserRouter.put("/change-password", auth, fn(UserController.changePassword));
-UserRouter.post("/send-reset-password", fn(UserController.sendResetPassword));
-UserRouter.post("/reset-password", fn(UserController.resetPassword));
+UserRouter.put(
+    "/change-password",
+    auth,
+    _per(UserController.changePassword, PER.edit_user)
+);
+UserRouter.post("/send-reset-password", _per(UserController.sendResetPassword));
+UserRouter.post("/reset-password", _per(UserController.resetPassword));
 
 export default UserRouter;

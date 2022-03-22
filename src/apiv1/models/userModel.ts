@@ -1,15 +1,11 @@
 import mongoose, { SchemaDefinitionProperty, ObjectId } from "mongoose";
+import bcrypt from "bcrypt";
+import envV1 from "../config/_envV1";
 import env from "../../config/env";
 
 const Schema = mongoose.Schema;
 
-const Permission = {
-    USER: "USER",
-    ADMIN: "ADMIN",
-    SUPER_ADMIN: "SUPER_ADMIN",
-};
-
-export interface UserInterface {
+export class User {
     _id: ObjectId;
     email: SchemaDefinitionProperty<{ type: String; required: true }>;
     username: SchemaDefinitionProperty<{
@@ -20,16 +16,27 @@ export interface UserInterface {
     fullname?: String;
     avatar?: SchemaDefinitionProperty<String>;
     isActivate: boolean;
-    permission: SchemaDefinitionProperty<{ type: String; required: true }>[];
     timeResetPassword?: Number;
+    permissions: String[];
+    groups: String[];
+
+    constructor({ email, username, password, fullname, avatar }) {
+        const salt = bcrypt.genSaltSync(10);
+        this.email = email;
+        this.username = username;
+        this.password = bcrypt.hashSync(password, salt);
+        this.fullname = fullname;
+        this.avatar = avatar;
+    }
 }
 
-interface UserModelMethod {
-    permission?: typeof Permission;
+interface UserUtils {
+    // permission?: typeof Permission;
     verifyPermission?: (per: string) => boolean;
+    getProfile?: (filter, select) => any;
 }
 
-const User = new Schema<UserInterface>(
+const UserSchema = new Schema<User>(
     {
         email: { type: String, required: true, unique: true },
         username: {
@@ -42,21 +49,34 @@ const User = new Schema<UserInterface>(
         fullname: String,
         avatar: { type: String, default: env.AVATAR_DEFAULT },
         isActivate: { type: Boolean, default: false },
-        permission: [{ type: String, default: Permission.USER }],
         timeResetPassword: Number,
+        permissions: [{ type: String, ref: envV1.PERMISSION_MODEL }],
+        groups: [{ type: String, ref: envV1.GROUP_MODEL }],
     },
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-const UserModel: mongoose.Model<UserInterface> & UserModelMethod =
-    mongoose.model("User", User);
-UserModel.permission = Permission;
+const UserModel: mongoose.Model<User> & UserUtils = mongoose.model(
+    envV1.USER_MODEL,
+    UserSchema
+);
+
+// UserModel.permission = Permission;
 UserModel.verifyPermission = (per: string) => {
-    for (const [key, value] of Object.entries(Permission)) {
-        if (value === per) {
-            return true;
-        }
-    }
+    // for (const [key, value] of Object.entries(Permission)) {
+    //     if (value === per) {
+    //         return true;
+    //     }
+    // }
     return false;
+};
+UserModel.getProfile = (id, options = "") => {
+    return UserModel.findById(id, options)
+        .populate("permissions")
+        .populate("groups")
+        .populate({
+            path: "groups",
+            populate: { path: "permissions" },
+        });
 };
 export default UserModel;
