@@ -31,6 +31,7 @@ const ROUTER_RESET_PASSWORD = "reset-password";
 
 const KEY_ACTIVATE_USER = "active_token";
 const KEY_RESET_PASSWORD = "reset_password_token";
+
 export default {
     NODE_ENV,
     PORT,
