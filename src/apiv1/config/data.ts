@@ -2,7 +2,7 @@ import GroupModel, { Group, GROUP } from "../models/groupModel";
 import PermissionModel, { PER } from "../models/permissionModel";
 import { generatePermission } from "../utils/functions";
 
-export async function addPermissionToModel() {
+async function addPermissionToModel() {
     const permissions = generatePermission(PER);
     for (const permission of permissions) {
         const per = await PermissionModel.findOne(
@@ -16,7 +16,7 @@ export async function addPermissionToModel() {
     console.log("Add permission OK");
 }
 
-export async function addGroupToModel() {
+async function addGroupToModel() {
     for (const key in GROUP) {
         const { code, permission }: { code: string; permission: string[] } =
             GROUP[key];
@@ -38,3 +38,9 @@ export async function addGroupToModel() {
     }
     console.log("Add group OK");
 }
+
+async function dataApiV1() {
+    await addPermissionToModel();
+    await addGroupToModel();
+}
+export default dataApiV1;
