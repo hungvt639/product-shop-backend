@@ -32,6 +32,9 @@ const ROUTER_RESET_PASSWORD = "reset-password";
 const KEY_ACTIVATE_USER = "active_token";
 const KEY_RESET_PASSWORD = "reset_password_token";
 
+const APIV1 = "/apiv1";
+const APIV1_1 = "/apiv1-1";
+
 export default {
     NODE_ENV,
     PORT,
@@ -55,4 +58,6 @@ export default {
     ROUTER_RESET_PASSWORD,
     KEY_ACTIVATE_USER,
     KEY_RESET_PASSWORD,
+    APIV1,
+    APIV1_1,
 };
