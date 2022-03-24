@@ -2,9 +2,9 @@ import { Req, Res } from "../interfaces/Express";
 import GroupModel, { Group } from "../models/groupModel";
 import PermissionModel from "../models/permissionModel";
 import UserModel from "../models/userModel";
-import { removeKeyNull } from "../utils/functions";
+import { removeKeyNull, validArrObjId } from "../utils/functions";
 import HttpResponse from "../utils/response";
-
+import { ObjectId } from "mongoose";
 async function getGroups(req: Req, res: Res) {
     const filter = removeKeyNull(req.query);
     const groups = await GroupModel.find(filter).populate("permissions");
@@ -47,42 +47,44 @@ async function deleteGroup(req: Req, res: Res) {
     HttpResponse.ok(res, del);
 }
 
-async function addPerToGroup(req: Req, res: Res) {
-    const { permissionIds } = req.body;
+async function permissionOfGroup(req: Req, res: Res) {
+    const { permissions } = req.body;
     const { id } = req.params;
     const group = await GroupModel.findById(id);
+    if (!validArrObjId(permissions)) {
+        return HttpResponse.badRequest(
+            res,
+            "permissions không đúng định dạng ObjectId"
+        );
+    }
     if (!group)
         return HttpResponse.badRequest(
             res,
             "Không tìm thấy Nhóm nào có id là: " + id
         );
     const pers = await PermissionModel.find({
-        _id: { $in: permissionIds },
+        _id: { $in: permissions },
     });
+    if (pers.length !== permissions.length) {
+        const perErr = permissions.filter(
+            (per: string) => !pers.filter((p) => p._id == per).length
+        );
+        return HttpResponse.badRequest(
+            res,
+            `Không tìm thấy Permission có id là ${perErr}`
+        );
+    }
     const perIds = pers.map((p) => p._id);
-    const perNotIn = perIds.filter((id) => !group.permissions.includes(id));
-    group.permissions.push(...perNotIn);
+    group.permissions = perIds;
     await group.save();
     const r = await group.populate("permissions");
     HttpResponse.ok(res, r);
-}
-async function removePerFromGroup(req: Req, res: Res) {
-    const { permissions } = req.body;
-    const { id } = req.params;
-
-    const group = await GroupModel.findOneAndUpdate(
-        { _id: id },
-        { $pullAll: { permissions: permissions } },
-        { new: true }
-    ).populate("permissions");
-    HttpResponse.ok(res, group);
 }
 
 const GroupController = {
     getGroups,
     createGroup,
     deleteGroup,
-    addPerToGroup,
-    removePerFromGroup,
+    permissionOfGroup,
 };
 export default GroupController;

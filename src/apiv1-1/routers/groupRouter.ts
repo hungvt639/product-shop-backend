@@ -11,12 +11,11 @@ const GrRouter = Router();
 GrRouter.get(grRoute.get_groups, auth, role, _(GrCtl.getGroups));
 GrRouter.post(grRoute.create_group, auth, role, _(GrCtl.createGroup));
 GrRouter.delete(grRoute.delete_group, auth, role, _(GrCtl.deleteGroup));
-GrRouter.post(grRoute.add_per_to_gr, auth, role, _(GrCtl.addPerToGroup));
 GrRouter.put(
-    grRoute.remove_per_from_group,
+    grRoute.update_permission_in_group,
     auth,
     role,
-    _(GrCtl.removePerFromGroup)
+    _(GrCtl.permissionOfGroup)
 );
 
 export default GrRouter;

@@ -14,8 +14,7 @@ export const ROUTE = {
         change_password: "/change-password",
         send_reset_password: "/send-reset-password",
         reset_password: "/reset-password",
-        add_group_for_user: "/add-group/:id",
-        remove_group_of_user: "/remove-group/:id",
+        update_group_for_user: "/group/:id",
     },
     permission: {
         root: "/permission",
@@ -30,8 +29,7 @@ export const ROUTE = {
         get_groups: "",
         create_group: "",
         delete_group: "/:id",
-        add_per_to_gr: "/add-permissions/:id",
-        remove_per_from_group: "/remove-permissions/:id",
+        update_permission_in_group: "/permissions-group/:id",
     },
 };
 type Urlstype = typeof ROUTE.user &

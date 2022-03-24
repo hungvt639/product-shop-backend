@@ -15,13 +15,8 @@ export const PER: Permission[] = [
     new Permission(persName.edit_profile, URLs.edit_profile, METHOD.PUT),
     new Permission(persName.change_password, URLs.change_password, METHOD.PUT),
     new Permission(
-        persName.add_group_for_user,
-        URLs.add_group_for_user,
-        METHOD.PUT
-    ),
-    new Permission(
-        persName.remove_group_of_user,
-        URLs.remove_group_of_user,
+        persName.update_group_for_user,
+        URLs.update_group_for_user,
         METHOD.PUT
     ),
     new Permission(persName.create_per, URLs.create_per, METHOD.POST),
@@ -33,11 +28,10 @@ export const PER: Permission[] = [
     new Permission(persName.get_groups, URLs.get_groups, METHOD.GET),
     new Permission(persName.create_group, URLs.create_group, METHOD.POST),
     new Permission(persName.delete_group, URLs.delete_group, METHOD.DELETE),
-    new Permission(persName.add_per_to_gr, URLs.add_per_to_gr, METHOD.POST),
     new Permission(
-        persName.remove_per_from_group,
-        URLs.remove_per_from_group,
-        METHOD.PUT
+        persName.update_permission_in_group,
+        URLs.update_permission_in_group,
+        METHOD.POST
     ),
 ];
 export const GROUP = {
@@ -50,8 +44,7 @@ export const GROUP = {
             persName.get_user,
             persName.edit_profile,
             persName.change_password,
-            persName.add_group_for_user,
-            persName.remove_group_of_user,
+            persName.update_group_for_user,
 
             persName.create_per,
             persName.list_per,
@@ -62,8 +55,7 @@ export const GROUP = {
             persName.get_groups,
             persName.create_group,
             persName.delete_group,
-            persName.add_per_to_gr,
-            persName.remove_per_from_group,
+            persName.update_permission_in_group,
         ],
     },
     user: {

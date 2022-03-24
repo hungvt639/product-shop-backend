@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import env from "../../config/env";
 import { SchemaDefinitionProperty, ObjectId } from "mongoose";
 import HttpResponse from "../utils/response";
-import { removeKeyNull, setOption } from "../utils/functions";
+import { removeKeyNull, setOption, validArrObjId } from "../utils/functions";
 import UserModel, { User } from "../models/userModel";
 import SendMail from "../utils/sendEmail";
 import GroupModel from "../models/groupModel";
@@ -298,10 +298,16 @@ async function resetPassword(req: Req, res: Res) {
     );
 }
 
-async function addGroup(req: Req, res: Res) {
+async function updateGroupUser(req: Req, res: Res) {
     const { groups } = req.body;
     const { id } = req.params;
-    let user = await UserModel.findById(id, "_id username fullname groups");
+    const user = await UserModel.findById(id, "_id fullname username groups");
+    if (!validArrObjId(groups)) {
+        return HttpResponse.badRequest(
+            res,
+            "groups không đúng định dạng ObjectId"
+        );
+    }
     if (!user)
         return HttpResponse.badRequest(
             res,
@@ -310,34 +316,25 @@ async function addGroup(req: Req, res: Res) {
     const grs = await GroupModel.find({
         _id: { $in: groups },
     });
+    if (grs.length !== groups.length) {
+        const grErr = groups.filter(
+            (gr: string) => !grs.filter((g) => g._id == gr).length
+        );
+        return HttpResponse.badRequest(
+            res,
+            `Không tìm thấy Group có id là ${grErr}`
+        );
+    }
     const grIds = grs.map((p) => p._id);
-    const grNotIn = grIds.filter((id) => !user.groups.includes(id));
-    user.groups.push(...grNotIn);
+    user.groups = grIds;
     await user.save();
-    user = await user.populate({
+    const u = await user.populate({
         path: "groups",
         populate: { path: "permissions" },
     });
-    HttpResponse.ok(res, user);
+    HttpResponse.ok(res, u);
 }
-async function removeGroup(req: Req, res: Res) {
-    const { groups } = req.body;
-    const { id } = req.params;
-    console.log("p", groups);
-    console.log("id", id);
 
-    const user = await UserModel.findByIdAndUpdate(
-        id,
-        { $pullAll: { groups: groups } },
-        { new: true }
-    )
-        .select("_id username fullname groups")
-        .populate({
-            path: "groups",
-            populate: { path: "permissions" },
-        });
-    HttpResponse.ok(res, user);
-}
 export default {
     register,
     activateUser,
@@ -351,6 +348,5 @@ export default {
     changePassword,
     sendResetPassword,
     resetPassword,
-    addGroup,
-    removeGroup,
+    updateGroupUser,
 };

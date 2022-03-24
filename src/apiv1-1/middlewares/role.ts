@@ -5,7 +5,7 @@ const role = (req: Req, res: Res, next: Next) => {
     const { method, baseUrl, user } = req;
     if (_hasPermission(user, method, baseUrl)) next();
     else
-        HttpResponse.FORBIDDEN(
+        HttpResponse.forbidden(
             res,
             "Bạn không có quyền truy cập chức năng này"
         );

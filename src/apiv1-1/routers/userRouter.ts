@@ -19,7 +19,11 @@ UserRouter.put(uRoute.edit_profile, auth, role, _(UserCtl.editProfile));
 UserRouter.put(uRoute.change_password, auth, role, _(UserCtl.changePassword));
 UserRouter.post(uRoute.send_reset_password, _(UserCtl.sendResetPassword));
 UserRouter.post(uRoute.reset_password, _(UserCtl.resetPassword));
-UserRouter.put(uRoute.add_group_for_user, auth, role, _(UserCtl.addGroup));
-UserRouter.put(uRoute.remove_group_of_user, auth, role, _(UserCtl.removeGroup));
+UserRouter.put(
+    uRoute.update_group_for_user,
+    auth,
+    role,
+    _(UserCtl.updateGroupUser)
+);
 
 export default UserRouter;

@@ -13,7 +13,7 @@ function unauthorizer(res: Res, message: string) {
     res.status(StatusCodes.UNAUTHORIZED).json({ message });
 }
 
-function FORBIDDEN(res: Res, message: string) {
+function forbidden(res: Res, message: string) {
     res.status(StatusCodes.FORBIDDEN).json({ message });
 }
 
@@ -21,6 +21,6 @@ const HttpResponse = {
     badRequest,
     ok,
     unauthorizer,
-    FORBIDDEN,
+    forbidden,
 };
 export default HttpResponse;

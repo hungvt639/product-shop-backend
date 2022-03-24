@@ -1,3 +1,4 @@
+import { isValidObjectId } from "mongoose";
 import { generateURLs, METHOD } from "../routers/_const";
 
 export function convertCode(str: string) {
@@ -47,4 +48,10 @@ export function removeKeyNull(obj: any) {
         if (!obj[key]) delete obj[key];
     });
     return obj;
+}
+
+export function validArrObjId(value: string[] | undefined) {
+    if (!value) return false;
+    if (!value.length) return false;
+    else return value.every((val) => isValidObjectId(val));
 }
