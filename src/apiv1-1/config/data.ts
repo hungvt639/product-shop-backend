@@ -5,6 +5,7 @@ import {
     generateURLs,
     METHOD,
 } from "../routers/_const";
+import { ObjectId } from "mongoose";
 
 const persName = generateListNamePermissions();
 const URLs = generateURLs();
@@ -72,27 +73,21 @@ export const GROUP = {
 };
 
 async function addPermissionToModel() {
-    // var route,
-    //     routes = [];
-    // app._router.stack.forEach(function (middleware) {
-    //     if (middleware.route) {
-    //         // routes registered directly on the app
-    //         routes.push(middleware.route);
-    //     } else if (middleware.name === "router") {
-    //         // router middleware
-    //         middleware.handle.stack.forEach(function (handler) {
-    //             route = handler.route;
-    //             route && routes.push(route);
-    //         });
+    // for (const per of PER) {
+    //     const permission = await PermissionModel.findOne({ name: per.name });
+    //     if (!permission) {
+    //         await PermissionModel.create(per);
     //     }
-    // });
-    // console.log("routers ", routes);
-
-    for (const per of PER) {
-        const permission = await PermissionModel.findOne({ name: per.name });
-        if (!permission) {
-            await PermissionModel.create(per);
-        }
+    // }
+    const permissionIds = PER.map((p) => p.name);
+    const pers = await PermissionModel.find({
+        name: { $in: permissionIds },
+    });
+    if (pers.length !== permissionIds.length) {
+        const perErr = PER.filter(
+            (per: Permission) => !pers.filter((p) => p.name === per.name).length
+        );
+        await PermissionModel.create(perErr);
     }
     console.log("Add permission V1-1 OK");
 }

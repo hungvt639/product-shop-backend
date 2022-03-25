@@ -1,7 +1,8 @@
-import mongoose, { Schema, SchemaDefinitionProperty } from "mongoose";
+import mongoose, { ObjectId, Schema, SchemaDefinitionProperty } from "mongoose";
 import envV1_1 from "../config/_envV1";
 import { convertCode } from "../utils/functions";
 export class Permission {
+    _id?: ObjectId;
     name: SchemaDefinitionProperty<{
         type: String;
         required: true;

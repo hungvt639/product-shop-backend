@@ -1,4 +1,6 @@
 import { isValidObjectId } from "mongoose";
+import { Req } from "../interfaces/Express";
+import { LOCALE_KEY } from "../locales";
 import { generateURLs, METHOD } from "../routers/_const";
 
 export function convertCode(str: string) {
@@ -54,4 +56,12 @@ export function validArrObjId(value: string[] | undefined) {
     if (!value) return false;
     if (!value.length) return false;
     else return value.every((val) => isValidObjectId(val));
+}
+
+export function getLanguageKey(req: Req) {
+    const language = req.headers.allow;
+    console.log(language);
+
+    if (LOCALE_KEY.includes(language)) return language;
+    return LOCALE_KEY[0];
 }

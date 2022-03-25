@@ -2,9 +2,13 @@ import jwt from "jsonwebtoken";
 import env from "../../config/env";
 import { Next, Req, Res } from "../interfaces/Express";
 import UserModel, { User } from "../models/userModel";
+import { getLanguageKey } from "../utils/functions";
 import HttpResponse from "../utils/response";
 
 const auth = (req: Req, res: Res, next: Next) => {
+    const locale = getLanguageKey(req);
+    console.log("locale", locale);
+
     const bearerToken = req.headers.authorization;
     if (!bearerToken) {
         return HttpResponse.unauthorizer(
@@ -43,5 +47,34 @@ const auth = (req: Req, res: Res, next: Next) => {
         });
     }
 };
-
+export const checkAuth = async (req: Req, res: Res, next: Next) => {
+    try {
+        const bearerToken = req.headers.authorization;
+        if (!bearerToken) {
+            return HttpResponse.unauthorizer(
+                res,
+                "Vui lòng đăng nhập để sử dụng chức năng này!"
+            );
+        }
+        const tokens = bearerToken.split(" ");
+        if (tokens[0] !== "Bearer")
+            return HttpResponse.unauthorizer(res, "Token is not valid");
+        const payload: any = jwt.verify(tokens[1], env.SECRET);
+        const user = await UserModel.getProfile(
+            payload._id,
+            "_id email username fullname avatar"
+        );
+        if (!user) {
+            return HttpResponse.unauthorizer(
+                res,
+                "Không tồn tại tài khoản này"
+            );
+        } else {
+            req.user = user;
+            return true;
+        }
+    } catch (e) {
+        return HttpResponse.unauthorizer(res, e.message);
+    }
+};
 export default auth;
