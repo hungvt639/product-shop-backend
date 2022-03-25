@@ -1,17 +1,27 @@
 import GroupModel, { Group, GROUP } from "../models/groupModel";
-import PermissionModel, { PER } from "../models/permissionModel";
+import PermissionModel, { PER, Permission } from "../models/permissionModel";
 import { generatePermission } from "../utils/functions";
 
 async function addPermissionToModel() {
     const permissions = generatePermission(PER);
-    for (const permission of permissions) {
-        const per = await PermissionModel.findOne(
-            { code: permission.code },
-            "_id"
+    // for (const permission of permissions) {
+    //     const per = await PermissionModel.findOne(
+    //         { code: permission.code },
+    //         "_id"
+    //     );
+    //     if (!per) {
+    //         await PermissionModel.create(permission);
+    //     }
+    // }
+    const permissionIds = permissions.map((p) => p.name);
+    const pers = await PermissionModel.find({
+        name: { $in: permissionIds },
+    });
+    if (pers.length !== permissionIds.length) {
+        const perErr = permissions.filter(
+            (per: Permission) => !pers.filter((p) => p.name === per.name).length
         );
-        if (!per) {
-            await PermissionModel.create(permission);
-        }
+        await PermissionModel.create(perErr);
     }
     console.log("Add permission OK");
 }
