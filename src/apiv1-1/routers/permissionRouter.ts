@@ -9,10 +9,13 @@ const pRoute = ROUTE.permission;
 
 const PerRouter = Router();
 
-PerRouter.post(pRoute.create_per, auth, role, _(PerCtl.createPermission));
-PerRouter.get(pRoute.list_per, auth, role, _(PerCtl.getListPermission));
-PerRouter.put(pRoute.edit_per, auth, role, _(PerCtl.editPermission));
-PerRouter.delete(pRoute.delete_per, auth, role, _(PerCtl.deletePermission));
-PerRouter.get(pRoute.list_url, auth, role, _(PerCtl.getListUrl));
+PerRouter.use(auth);
+PerRouter.use(role);
+
+PerRouter.post(pRoute.create_per, _(PerCtl.createPermission));
+PerRouter.get(pRoute.list_per, _(PerCtl.getListPermission));
+PerRouter.put(pRoute.edit_per, _(PerCtl.editPermission));
+PerRouter.delete(pRoute.delete_per, _(PerCtl.deletePermission));
+PerRouter.get(pRoute.list_url, _(PerCtl.getListUrl));
 
 export default PerRouter;

@@ -12,15 +12,15 @@ export function convertCode(str: string) {
         .toLowerCase();
 }
 
-export function setOption(obj: any, key: string, value: any, regex = false) {
-    if (value && key) {
-        if (regex) {
-            obj[key] = { $regex: value, $options: "i" };
-        } else {
-            obj[key] = value;
-        }
-    }
-}
+// export function setOption(obj: any, key: string, value: any, regex = false) {
+//     if (value && key) {
+//         if (regex) {
+//             obj[key] = { $regex: value, $options: "i" };
+//         } else {
+//             obj[key] = value;
+//         }
+//     }
+// }
 
 export function wordUpFirst(str: string) {
     return str
