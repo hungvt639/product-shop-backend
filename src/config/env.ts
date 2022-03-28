@@ -25,6 +25,9 @@ const EMAIL_USER = process.env.EMAIL_USER;
 const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 const EMAIL_PORT = parseInt(process.env.EMAIL_PORT) | 0;
 
+const CORS_ORIGIN = (process.env.CORS_ORIGIN || "")
+    .split(" ")
+    .map((o) => new RegExp(o));
 const FRONTEND = process.env.FRONTEND;
 const ROUTER_ACTIVATE_USER = "activate-user";
 const ROUTER_RESET_PASSWORD = "reset-password";
@@ -60,4 +63,5 @@ export default {
     KEY_RESET_PASSWORD,
     APIV1,
     APIV1_1,
+    CORS_ORIGIN,
 };

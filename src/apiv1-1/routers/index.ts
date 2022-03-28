@@ -4,8 +4,10 @@ import PerRouter from "./permissionRouter";
 import GrRouter from "./groupRouter";
 import { errorHandler } from "../utils/errorHandler ";
 import { ROUTE } from "./_const";
+// import locales from "../middlewares/locales";
 
 const ApiV1_1 = Router();
+// ApiV1_1.use("/:l", locales);
 ApiV1_1.use(ROUTE.user.root, UserRouter);
 ApiV1_1.use(ROUTE.permission.root, PerRouter);
 ApiV1_1.use(ROUTE.group.root, GrRouter);
