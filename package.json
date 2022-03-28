@@ -48,6 +48,7 @@
         "mysql2": "^2.3.3",
         "nodemailer": "^6.7.2",
         "nodemailer-express-handlebars": "^5.0.0",
+        "rotating-file-stream": "^2.1.6",
         "sequelize": "^6.16.2",
         "sequelize-cli": "^6.4.1",
         "typeorm": "^0.2.44"
