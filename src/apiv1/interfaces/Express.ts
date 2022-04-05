@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import { User } from "../models/userModel";
+import Express, { Request, Response, NextFunction } from "express";
+import { User } from "../models/user/userModel";
 
 export interface Req extends Request {
     user?: User;

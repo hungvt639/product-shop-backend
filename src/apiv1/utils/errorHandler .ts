@@ -2,7 +2,7 @@ import { Req, Res, Next } from "../interfaces/Express";
 import HttpResponse from "./response";
 
 export function errorHandler(err: any, req: Req, res: Res, next: Next) {
-    HttpResponse.badRequest(res, err.message);
+    return HttpResponse.badRequest(res, err.message);
 }
 
 // class ServerError extends Error {
