@@ -59,9 +59,18 @@ export const ROUTE = {
     product: {
         root: "/product",
         get_list_product: "",
+        get_product_sale: "/sale",
         create_product: "",
         edit_product: "/:id",
         delete_product: "/:id",
+        get_product: "/:slug",
+    },
+    order: {
+        root: "/order",
+        get_list_order: "",
+        create_order: "",
+        updte_order: "/:id",
+        get_order_detail: "/detail/:id",
     },
 };
 type Urlstype = typeof ROUTE.user &

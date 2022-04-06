@@ -5,10 +5,11 @@ import path from "path";
 export type OptionEmail = {
     to?: string | Address | Array<string | Address> | undefined;
     subject?: string;
-    template?: "activate-user" | "reset-password";
+    template?: "activate-user" | "reset-password" | "order";
     context: {
         fullname?: string;
         href?: string;
+        message?: string;
     };
 };
 

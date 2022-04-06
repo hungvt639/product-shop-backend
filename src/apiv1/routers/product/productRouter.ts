@@ -8,11 +8,12 @@ const pRoute = ROUTE.product;
 
 const ProductRouter = Router();
 
-ProductRouter.get(pRoute.get_list_product, _(PCtl.gets));
+ProductRouter.get(pRoute.get_product_sale, _(PCtl.gets_sale));
+ProductRouter.get(pRoute.get_product, _(PCtl.get));
 
 ProductRouter.use(auth);
 ProductRouter.use(role);
-
+ProductRouter.get(pRoute.get_list_product, _(PCtl.gets));
 ProductRouter.post(pRoute.create_product, _(PCtl.create));
 ProductRouter.put(pRoute.edit_product, _(PCtl.edit));
 ProductRouter.delete(pRoute.delete_product, _(PCtl.deleteP));

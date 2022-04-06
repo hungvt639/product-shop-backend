@@ -5,12 +5,17 @@ async function create(value: Product) {
 }
 
 async function gets() {
-    return await ProductModel.find({});
+    return await ProductModel.find({}).populate("type");
 }
-
+async function gets_sale() {
+    return await ProductModel.find({ isSale: true }).populate("type");
+}
+async function get(slug: string) {
+    return await ProductModel.findOne({ slug: slug }).populate("type");
+}
 async function deleteP(id: string) {
-    const del = await ProductModel.deleteOne({ _id: id });
-    if (del.deletedCount <= 0) throw new Error("Xóa type không thành công");
+    const del = await ProductModel.findByIdAndRemove(id);
+    if (!del) throw new Error("Xóa product không thành công");
 }
 async function edit(id: string, product) {
     const color = await ProductModel.findOneAndUpdate({ _id: id }, product, {
@@ -22,6 +27,8 @@ async function edit(id: string, product) {
 export default {
     create,
     gets,
+    get,
     deleteP,
     edit,
+    gets_sale,
 };

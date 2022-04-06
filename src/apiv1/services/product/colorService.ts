@@ -1,4 +1,4 @@
-import ColorModel, { Color } from "../../models/product/ColorModel";
+import ColorModel, { Color } from "../../models/product/colorModel";
 
 async function create(name: string, code: string) {
     return await ColorModel.create(new Color(name, code));

@@ -7,6 +7,7 @@ import UserModel, { User } from "../../models/user/userModel";
 import SendMail from "../../utils/sendEmail";
 import GroupModel from "../../models/user/groupModel";
 import { GROUP } from "../../config/data";
+import envV1 from "../../config/_envV1";
 
 async function register(data: User) {
     const group = await GroupModel.findOne({ name: GROUP.user.name });
@@ -29,7 +30,7 @@ async function register(data: User) {
         template: "activate-user",
         context: {
             fullname: data.fullname as string,
-            href: `${env.FRONTEND}/${env.ROUTER_ACTIVATE_USER}?${env.KEY_ACTIVATE_USER}=${token}`,
+            href: `${env.FRONTEND}/${envV1.r.activate_user}?${envV1.query.active_token}=${token}`,
         },
     });
     await user.save();
@@ -147,7 +148,7 @@ async function sendResetPassword(param: string) {
         template: "reset-password",
         context: {
             fullname: user.fullname as string,
-            href: `${env.FRONTEND}/${env.ROUTER_RESET_PASSWORD}?${env.KEY_RESET_PASSWORD}=${token}`,
+            href: `${env.FRONTEND}/${envV1.r.reset_password}?${envV1.query.reset_password_token}=${token}`,
         },
     });
     user.timeResetPassword = now;

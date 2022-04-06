@@ -16,8 +16,7 @@ const accessLogStream = rfs.createStream(generator, {
     size: "10M",
     path: path.join(__dirname, "../", "log"),
 });
-// import dataApiV1 from "./apiv1/config/data";
-// import { connectMySql } from "./config/mysql";
+
 const app = express();
 
 app.use("/public", express.static(path.join(__dirname, "../", "public")));

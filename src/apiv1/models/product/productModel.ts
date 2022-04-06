@@ -1,9 +1,15 @@
-import mongoose, { Schema, SchemaDefinitionProperty, Document } from "mongoose";
+import mongoose, {
+    Schema,
+    SchemaDefinitionProperty,
+    Document,
+    model,
+} from "mongoose";
 import envV1 from "../../config/_envV1";
 import mongoosastic, {
     MongoosasticDocument,
     MongoosasticModel,
 } from "mongoosastic";
+import slug from "mongoose-slug-generator";
 import env from "../../../config/env";
 
 export interface Product extends Document, MongoosasticDocument {
@@ -20,15 +26,17 @@ export interface Product extends Document, MongoosasticDocument {
         type: String;
     }>;
     image: String[];
-    price: SchemaDefinitionProperty<{
-        type: Number;
-    }>;
+    price: number;
     sizes: String[];
     colors: String[];
     type: SchemaDefinitionProperty<{
         type: String;
-        required: true;
     }>;
+    isSale:
+        | SchemaDefinitionProperty<{
+              type: boolean;
+          }>
+        | Boolean;
     description?: String;
     information?: String;
     sold: Number;
@@ -55,13 +63,14 @@ export interface Product extends Document, MongoosasticDocument {
     // }
 }
 
-const ProductSchema = new Schema(
+mongoose.plugin(slug);
+
+export const ProductSchema = new Schema(
     {
         name: {
             type: String,
             required: true,
-            unique: true,
-            maxlength: 20,
+            maxlength: 200,
             es_indexed: true,
         },
         slug: {
@@ -86,20 +95,30 @@ const ProductSchema = new Schema(
         },
         sizes: [String],
         colors: [{ type: String, ref: envV1.model.COLOR }],
-        type: { type: String, ref: envV1.model.TYPE, es_indexed: true },
-
+        type: {
+            type: String,
+            ref: envV1.model.TYPE,
+            es_indexed: true,
+            es_include_in_parent: true,
+        },
+        isSale: {
+            type: Boolean,
+            default: true,
+            es_indexed: true,
+        },
         description: String,
         information: String,
     },
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 ProductSchema.plugin(mongoosastic, {
+    populate: [{ path: "type" }],
     index: envV1.model.PRODUCT,
     clientOptions: {
         nodes: [env.ECONNREFUSED],
     },
 });
-const ProductModel = mongoose.model<Product, MongoosasticModel<Product>>(
+const ProductModel = model<Product, MongoosasticModel<Product>>(
     envV1.model.PRODUCT,
     ProductSchema
 );

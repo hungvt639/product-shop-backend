@@ -16,7 +16,7 @@ export class Color {
     }
 }
 
-const ColorSchema = new Schema<Color>(
+export const ColorSchema = new Schema<Color>(
     {
         name: {
             type: String,

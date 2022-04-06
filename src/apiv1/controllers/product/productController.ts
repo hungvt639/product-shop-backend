@@ -37,6 +37,15 @@ async function gets(req: Req, res: Res) {
     const products = await productService.gets();
     HttpResponse.ok(res, products);
 }
+async function gets_sale(req: Req, res: Res) {
+    const products = await productService.gets_sale();
+    HttpResponse.ok(res, products);
+}
+async function get(req: Req, res: Res) {
+    const { slug } = req.params;
+    const products = await productService.get(slug);
+    HttpResponse.ok(res, products);
+}
 
 async function deleteP(req: Req, res: Res) {
     const { id } = req.params;
@@ -58,6 +67,7 @@ async function edit(req: Req, res: Res) {
         description,
         information,
         sold,
+        isSale,
     } = req.body;
     const product = await productService.edit(id, {
         name,
@@ -71,13 +81,16 @@ async function edit(req: Req, res: Res) {
         description,
         information,
         sold,
+        isSale,
     });
     HttpResponse.ok(res, product);
 }
-const TypeController = {
+const ProductController = {
     create,
     gets,
+    get,
     deleteP,
     edit,
+    gets_sale,
 };
-export default TypeController;
+export default ProductController;

@@ -20,6 +20,7 @@ export default {
     EMAIL_USER: process.env.EMAIL_USER,
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
     EMAIL_PORT: parseInt(process.env.EMAIL_PORT || "0"),
+    SHIP: parseInt(process.env.SHIP || "30000"),
 
     ECONNREFUSED: process.env.ECONNREFUSED,
     CORS_ORIGIN: (process.env.CORS_ORIGIN || "")
@@ -28,11 +29,7 @@ export default {
     FRONTEND: process.env.FRONTEND,
     IMGUR_ID: process.env.IMGUR_ID,
 
-    ROUTER_ACTIVATE_USER: "activate-user",
-    ROUTER_RESET_PASSWORD: "reset-password",
-
-    KEY_ACTIVATE_USER: "active_token",
-    KEY_RESET_PASSWORD: "reset_password_token",
-
     APIV1: "/apiv1",
+
+    SHOP_NAME: process.env.SHOP_NAME || "",
 };
