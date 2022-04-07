@@ -1,18 +1,15 @@
-import mongoose, { Schema, SchemaDefinitionProperty } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import envV1 from "../../config/_envV1";
 
 export class Size {
-    name: SchemaDefinitionProperty<{
-        type: String;
-        required: true;
-    }>;
+    name: String;
 
     constructor(name: string) {
         this.name = name;
     }
 }
 
-const SizeSchema = new Schema<Size>(
+const SizeSchema = new Schema(
     {
         name: {
             type: String,
@@ -24,8 +21,5 @@ const SizeSchema = new Schema<Size>(
     { timestamps: false }
 );
 
-const SizeModel: mongoose.Model<Size> = mongoose.model(
-    envV1.model.SIZE,
-    SizeSchema
-);
+const SizeModel = mongoose.model<Size>(envV1.model.SIZE, SizeSchema);
 export default SizeModel;

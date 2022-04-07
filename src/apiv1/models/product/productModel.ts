@@ -11,32 +11,19 @@ import mongoosastic, {
 } from "mongoosastic";
 import slug from "mongoose-slug-generator";
 import env from "../../../config/env";
+import { Type } from "./typeModel";
 
 export interface Product extends Document, MongoosasticDocument {
-    name: SchemaDefinitionProperty<{
-        type: String;
-    }>;
-    slug: SchemaDefinitionProperty<{
-        type: String;
-    }>;
-    img: SchemaDefinitionProperty<{
-        type: String;
-    }>;
-    img1: SchemaDefinitionProperty<{
-        type: String;
-    }>;
+    name: String;
+    slug: String;
+    img: String;
+    img1: String;
     image: String[];
     price: number;
     sizes: String[];
     colors: String[];
-    type: SchemaDefinitionProperty<{
-        type: String;
-    }>;
-    isSale:
-        | SchemaDefinitionProperty<{
-              type: boolean;
-          }>
-        | Boolean;
+    type: String | Type;
+    isSale: Boolean;
     description?: String;
     information?: String;
     sold: Number;

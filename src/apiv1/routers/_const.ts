@@ -80,7 +80,8 @@ type Urlstype = typeof ROUTE.user &
     typeof ROUTE.size &
     typeof ROUTE.file &
     typeof ROUTE.type &
-    typeof ROUTE.product;
+    typeof ROUTE.product &
+    typeof ROUTE.order;
 
 export function generateURLs(): Urlstype {
     let URLs: any = {};

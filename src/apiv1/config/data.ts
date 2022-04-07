@@ -58,6 +58,15 @@ export const PER: Permission[] = [
     new Permission(persName.edit_product, URLs.edit_product, METHOD.PUT),
     new Permission(persName.delete_product, URLs.delete_product, METHOD.DELETE),
     new Permission(persName.get_product, URLs.get_product, METHOD.GET),
+
+    new Permission(persName.create_order, URLs.create_order, METHOD.POST),
+    new Permission(persName.updte_order, URLs.updte_order, METHOD.PUT),
+    new Permission(
+        persName.get_order_detail,
+        URLs.get_order_detail,
+        METHOD.GET
+    ),
+    new Permission(persName.get_list_order, URLs.get_list_order, METHOD.GET),
 ];
 export const GROUP = {
     superAdmin: {
@@ -103,6 +112,11 @@ export const GROUP = {
             persName.edit_product,
             persName.delete_product,
             persName.get_product,
+
+            persName.create_order,
+            persName.updte_order,
+            persName.get_order_detail,
+            persName.get_list_order,
         ],
     },
     user: {

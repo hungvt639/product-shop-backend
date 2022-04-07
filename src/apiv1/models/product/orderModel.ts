@@ -1,38 +1,38 @@
-import { Schema, Document, model } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 import envV1 from "../../config/_envV1";
 import env from "../../../config/env";
-import { Color, ColorSchema } from "./ColorModel";
+import { Color, ColorSchema } from "./colorModel";
 import { Product, ProductSchema } from "./productModel";
 
-enum StatusOrder {
-    "Đặt đơn" = 0,
-    "Xác nhận" = 1,
-    "Đang giao" = 2,
-    "Đã hủy" = 3,
-}
+const StatusOrder = {
+    "Đặt đơn": 0,
+    "Xác nhận": 1,
+    "Đang giao": 2,
+    "Đã hủy": 3,
+};
 
 interface OrderProduct extends Document {
-    product: Product;
+    product: Object;
     amount: Number;
-    size: string;
+    size: String;
     color: Color;
 }
 
-export interface Order extends Document {
-    fullname: string;
-    phone: string;
-    email: string;
-    address: string;
-    status: string;
+export interface Order {
+    fullname: String;
+    phone: String;
+    email: String;
+    address: String;
+    status: String;
     price: Number;
     orderProduct: OrderProduct[];
     ship: Number;
-    note: string;
-    noteAdmin: string;
+    note: String;
+    noteAdmin: String;
 }
 
 const OrderProductSchema = new Schema({
-    product: { type: ProductSchema, required: true },
+    product: { type: Object, required: true },
     amount: { type: Number, required: true },
     size: { type: String, required: true },
     color: { type: ColorSchema, required: true },
@@ -47,18 +47,20 @@ const OrderSchema = new Schema(
         status: {
             type: Number,
             default: StatusOrder["Đặt đơn"],
-            enum: Object.values(StatusOrder),
         },
-        price: { type: Number, required: true },
+        price: { type: Number, required: false },
         orderProduct: { type: [OrderProductSchema], required: true },
         ship: {
             type: Number,
             default: env.SHIP,
         },
-        note: { type: String },
+        note: String,
         noteAdmin: { type: String, default: "" },
     },
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
-const OrderModel = model<Order>(envV1.model.ORDER, OrderSchema);
+const OrderModel = mongoose.model<Order & Document>(
+    envV1.model.ORDER,
+    OrderSchema
+);
 export default OrderModel;

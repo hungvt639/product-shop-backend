@@ -1,21 +1,17 @@
 import mongoose, { Schema, SchemaDefinitionProperty } from "mongoose";
 import envV1 from "../../config/_envV1";
+import slug from "mongoose-slug-generator";
 
 export class Type {
-    name: SchemaDefinitionProperty<{
-        type: String;
-        required: true;
-    }>;
-    slug: SchemaDefinitionProperty<{
-        type: String;
-        required: true;
-    }>;
+    name: String;
+    slug: String;
     constructor(name: string) {
         this.name = name;
     }
 }
+mongoose.plugin(slug);
 
-const TypeSchema = new Schema<Type>(
+const TypeSchema = new Schema(
     {
         name: {
             type: String,
@@ -33,8 +29,5 @@ const TypeSchema = new Schema<Type>(
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-const TypeModel: mongoose.Model<Type> = mongoose.model(
-    envV1.model.TYPE,
-    TypeSchema
-);
+const TypeModel = mongoose.model<Type>(envV1.model.TYPE, TypeSchema);
 export default TypeModel;

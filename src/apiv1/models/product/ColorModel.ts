@@ -1,22 +1,16 @@
-import mongoose, { Schema, SchemaDefinitionProperty } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import envV1 from "../../config/_envV1";
 
 export class Color {
-    name: SchemaDefinitionProperty<{
-        type: String;
-        required: true;
-    }>;
-    code: SchemaDefinitionProperty<{
-        type: String;
-        required: true;
-    }>;
+    name: String;
+    code: String;
     constructor(name: string, code: string) {
         this.name = name;
         this.code = code;
     }
 }
 
-export const ColorSchema = new Schema<Color>(
+export const ColorSchema = new Schema(
     {
         name: {
             type: String,
@@ -33,8 +27,5 @@ export const ColorSchema = new Schema<Color>(
     { timestamps: false }
 );
 
-const ColorModel: mongoose.Model<Color> = mongoose.model(
-    envV1.model.COLOR,
-    ColorSchema
-);
+const ColorModel = mongoose.model<Color>(envV1.model.COLOR, ColorSchema);
 export default ColorModel;
