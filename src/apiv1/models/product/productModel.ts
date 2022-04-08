@@ -1,9 +1,4 @@
-import mongoose, {
-    Schema,
-    SchemaDefinitionProperty,
-    Document,
-    model,
-} from "mongoose";
+import mongoose, { Schema, Document, model } from "mongoose";
 import envV1 from "../../config/_envV1";
 import mongoosastic, {
     MongoosasticDocument,
@@ -26,28 +21,7 @@ export interface Product extends Document, MongoosasticDocument {
     isSale: Boolean;
     description?: String;
     information?: String;
-    sold: Number;
-    // constructor(
-    //     name: string,
-    //     img: string,
-    //     img1?: string,
-    //     images?: String[],
-    //     sizes?: string[],
-    //     colors?: string[],
-    //     description?: string,
-    //     information?: string,
-    //     sold?: number
-    // ) {
-    //     this.name = name;
-    //     this.img = img;
-    //     this.img1 = img1 ?? "";
-    //     this.images = images ?? [];
-    //     this.sizes = sizes ?? [];
-    //     this.colors = colors ?? [];
-    //     this.description = description ?? "";
-    //     this.information = information ?? "";
-    //     this.sold = sold ?? 0;
-    // }
+    sold: number;
 }
 
 mongoose.plugin(slug);
@@ -95,6 +69,11 @@ export const ProductSchema = new Schema(
         },
         description: String,
         information: String,
+        sold: {
+            type: Number,
+            es_indexed: true,
+            default: 0,
+        },
     },
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );

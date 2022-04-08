@@ -67,6 +67,19 @@ export const PER: Permission[] = [
         METHOD.GET
     ),
     new Permission(persName.get_list_order, URLs.get_list_order, METHOD.GET),
+
+    new Permission(
+        persName.get_list_carousel,
+        URLs.get_list_carousel,
+        METHOD.GET
+    ),
+    new Permission(persName.create_carousel, URLs.create_carousel, METHOD.POST),
+    new Permission(persName.edit_carousel, URLs.edit_carousel, METHOD.PUT),
+    new Permission(
+        persName.delete_carousel,
+        URLs.delete_carousel,
+        METHOD.DELETE
+    ),
 ];
 export const GROUP = {
     superAdmin: {
@@ -117,6 +130,11 @@ export const GROUP = {
             persName.updte_order,
             persName.get_order_detail,
             persName.get_list_order,
+
+            persName.get_list_carousel,
+            persName.create_carousel,
+            persName.edit_carousel,
+            persName.delete_carousel,
         ],
     },
     user: {

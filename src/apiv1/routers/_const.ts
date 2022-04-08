@@ -72,6 +72,13 @@ export const ROUTE = {
         updte_order: "/:id",
         get_order_detail: "/detail/:id",
     },
+    carousel: {
+        root: "/carousel",
+        get_list_carousel: "",
+        create_carousel: "",
+        edit_carousel: "/:id",
+        delete_carousel: "/:id",
+    },
 };
 type Urlstype = typeof ROUTE.user &
     typeof ROUTE.permission &
@@ -81,7 +88,8 @@ type Urlstype = typeof ROUTE.user &
     typeof ROUTE.file &
     typeof ROUTE.type &
     typeof ROUTE.product &
-    typeof ROUTE.order;
+    typeof ROUTE.order &
+    typeof ROUTE.carousel;
 
 export function generateURLs(): Urlstype {
     let URLs: any = {};

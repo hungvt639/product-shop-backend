@@ -11,6 +11,7 @@ import { ROUTE } from "./_const";
 import TypeRouter from "./product/typeRouter";
 import ProductRouter from "./product/productRouter";
 import OrderRouter from "./product/orderRouter";
+import CarouselRouter from "./product/carouselRouter";
 
 const ApiV1 = Router();
 
@@ -22,6 +23,7 @@ ApiV1.use(ROUTE.size.root, SizeRouter);
 ApiV1.use(ROUTE.color.root, ColorRouter);
 ApiV1.use(ROUTE.type.root, TypeRouter);
 ApiV1.use(ROUTE.product.root, ProductRouter);
+ApiV1.use(ROUTE.carousel.root, CarouselRouter);
 ApiV1.use(ROUTE.order.root, OrderRouter);
 
 ApiV1.use(errorHandler);

@@ -8,6 +8,7 @@ const envV1 = {
         TYPE: "type",
         PRODUCT: "product",
         ORDER: "order",
+        CAROUSE: "carousel",
     },
 
     MIMETYPEs: [
