@@ -6,13 +6,17 @@ class ProductService {
     }
 
     public async gets() {
-        return await ProductModel.find({}).populate("type");
+        return await ProductModel.find({}).populate("type").populate("colors");
     }
     public async gets_sale() {
-        return await ProductModel.find({ isSale: true }).populate("type");
+        return await ProductModel.find({ isSale: true })
+            .populate("type")
+            .populate("colors");
     }
     public async get(slug: string) {
-        return await ProductModel.findOne({ slug: slug }).populate("type");
+        return await ProductModel.findOne({ slug: slug })
+            .populate("type")
+            .populate("colors");
     }
     public async deleteP(id: string) {
         const del = await ProductModel.findByIdAndRemove(id);
