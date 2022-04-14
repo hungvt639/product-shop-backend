@@ -1,12 +1,19 @@
 import ProductModel, { Product } from "../../models/product/productModel";
-
 class ProductService {
     public async create(value: Product) {
-        return await ProductModel.create(value);
+        const product = new ProductModel(value);
+        await product.save();
+        return await product.populate("colors");
+        // return await ProductModel.create(value);
     }
 
-    public async gets() {
-        return await ProductModel.find({}).populate("type").populate("colors");
+    public async gets(sort: string, select) {
+        console.log("sort", sort);
+
+        return await ProductModel.find({}, select)
+            .sort(sort)
+            .populate("type")
+            .populate("colors");
     }
     public async gets_sale() {
         return await ProductModel.find({ isSale: true })
@@ -29,7 +36,9 @@ class ProductService {
             {
                 new: true,
             }
-        );
+        )
+            .populate("type")
+            .populate("colors");
         if (!color) throw new Error("Không tìm thấy type có id là: " + id);
         return color;
     }

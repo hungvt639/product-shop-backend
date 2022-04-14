@@ -55,7 +55,12 @@ export const ProductSchema = new Schema(
             es_indexed: true,
         },
         sizes: [String],
-        colors: [{ type: String, ref: envV1.model.COLOR }],
+        colors: [
+            {
+                type: String,
+                ref: envV1.model.COLOR,
+            },
+        ],
         type: {
             type: String,
             ref: envV1.model.TYPE,

@@ -34,6 +34,7 @@ export const ROUTE = {
     file: {
         root: "/file",
         upload_img: "/img",
+        upload_img_ck: "/img-ck",
     },
     color: {
         root: "/color",

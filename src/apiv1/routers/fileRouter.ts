@@ -11,6 +11,8 @@ const f = multer({ storage: storage });
 const fRoute = ROUTE.file;
 const File = Router();
 
+File.post(fRoute.upload_img_ck, f.single("upload"), _(fileCtl.uploadImgUrCK));
+
 File.use(auth);
 File.use(role);
 

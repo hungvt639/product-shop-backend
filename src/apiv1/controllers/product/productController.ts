@@ -35,7 +35,10 @@ class ProductController {
     }
 
     public async gets(req: Req, res: Res) {
-        const products = await productService.gets();
+        const sort = req.query.sort as string | undefined;
+        const select = req.query.select as string | undefined;
+
+        const products = await productService.gets(sort, select);
         HttpResponse.ok(res, products);
     }
     public async gets_sale(req: Req, res: Res) {
