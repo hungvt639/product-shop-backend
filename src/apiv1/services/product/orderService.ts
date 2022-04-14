@@ -1,5 +1,6 @@
 import env from "../../../config/env";
 import envV1 from "../../config/_envV1";
+import { Querys } from "../../interfaces/Express";
 import OrderModel, {
     Order,
     StatusOrder,
@@ -67,8 +68,13 @@ class OrderService {
         return order;
     }
 
-    public async gets() {
-        return await OrderModel.find({}).sort({ created_at: -1 });
+    public async gets(options: Querys, filter: Object, sort: string) {
+        console.log("f", filter);
+
+        return await OrderModel.paginate(filter, {
+            ...options,
+            sort,
+        });
     }
 
     public async update(id: string, { status, noteAdmin }) {

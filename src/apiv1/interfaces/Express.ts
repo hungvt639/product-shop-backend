@@ -3,11 +3,13 @@ import { User } from "../models/user/userModel";
 
 export interface Req extends Request {
     user?: User;
-    querys?: {
-        page: number;
-        limit: number;
-        search: string;
-    };
+    querys?: Querys;
+}
+export interface Querys {
+    page: number;
+    limit: number;
+    search: string;
+    select: string;
 }
 export interface Res extends Response {}
 

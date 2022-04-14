@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, model } from "mongoose";
+import mongoose, { Schema, Document, model, PaginateModel } from "mongoose";
 import envV1 from "../../config/_envV1";
 import mongoosastic, {
     MongoosasticDocument,
@@ -7,6 +7,7 @@ import mongoosastic, {
 import slug from "mongoose-slug-generator";
 import env from "../../../config/env";
 import { Type } from "./typeModel";
+import paginate from "mongoose-paginate-v2";
 
 export interface Product extends Document, MongoosasticDocument {
     name: String;
@@ -82,6 +83,9 @@ export const ProductSchema = new Schema(
     },
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
+
+ProductSchema.plugin(paginate);
+
 ProductSchema.plugin(mongoosastic, {
     populate: [{ path: "type" }],
     index: envV1.model.PRODUCT,
@@ -89,8 +93,9 @@ ProductSchema.plugin(mongoosastic, {
         nodes: [env.ECONNREFUSED],
     },
 });
-const ProductModel = model<Product, MongoosasticModel<Product>>(
-    envV1.model.PRODUCT,
-    ProductSchema
-);
+const ProductModel = model<
+    Product,
+    PaginateModel<Product>,
+    MongoosasticModel<Product>
+>(envV1.model.PRODUCT, ProductSchema);
 export default ProductModel;

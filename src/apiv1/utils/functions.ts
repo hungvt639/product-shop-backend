@@ -46,7 +46,7 @@ export function valiDataPermission(method: string, url: string) {
 
 export function removeKeyNull(obj: any) {
     Object.keys(obj).forEach((key) => {
-        if (!obj[key]) delete obj[key];
+        if (typeof obj[key] === "undefined") delete obj[key];
     });
     return obj;
 }

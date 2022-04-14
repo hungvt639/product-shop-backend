@@ -1,24 +1,46 @@
+import { Querys } from "../../interfaces/Express";
 import ProductModel, { Product } from "../../models/product/productModel";
+
 class ProductService {
     public async create(value: Product) {
         const product = new ProductModel(value);
         await product.save();
         return await product.populate("colors");
-        // return await ProductModel.create(value);
     }
 
-    public async gets(sort: string, select) {
-        console.log("sort", sort);
-
-        return await ProductModel.find({}, select)
-            .sort(sort)
-            .populate("type")
-            .populate("colors");
+    public async gets(options: Querys, sort: string) {
+        return await ProductModel.paginate(
+            {},
+            {
+                ...options,
+                sort,
+                populate: [
+                    {
+                        path: "type",
+                    },
+                    {
+                        path: "colors",
+                    },
+                ],
+            }
+        );
     }
-    public async gets_sale() {
-        return await ProductModel.find({ isSale: true })
-            .populate("type")
-            .populate("colors");
+    public async gets_sale(options: Querys, sort: string) {
+        return await ProductModel.paginate(
+            { isSale: true },
+            {
+                ...options,
+                sort,
+                populate: [
+                    {
+                        path: "type",
+                    },
+                    {
+                        path: "colors",
+                    },
+                ],
+            }
+        );
     }
     public async get(slug: string) {
         return await ProductModel.findOne({ slug: slug })

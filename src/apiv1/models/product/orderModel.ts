@@ -1,8 +1,9 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, PaginateModel } from "mongoose";
 import envV1 from "../../config/_envV1";
 import env from "../../../config/env";
 import { Color } from "./colorModel";
 import { Product } from "./productModel";
+import paginate from "mongoose-paginate-v2";
 
 export const StatusOrder = {
     "Đặt đơn": 0,
@@ -19,7 +20,7 @@ interface OrderProduct {
     color: Color;
 }
 
-export interface Order {
+export interface Order extends Document {
     fullname: String;
     phone: String;
     email: String;
@@ -100,5 +101,11 @@ const OrderSchema = new Schema(
     },
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
-const OrderModel = mongoose.model<Order>(envV1.model.ORDER, OrderSchema);
+
+OrderSchema.plugin(paginate);
+
+const OrderModel = mongoose.model<Order, PaginateModel<Order>>(
+    envV1.model.ORDER,
+    OrderSchema
+);
 export default OrderModel;
