@@ -95,7 +95,6 @@ ProductSchema.plugin(mongoosastic, {
 });
 const ProductModel = model<
     Product,
-    PaginateModel<Product>,
-    MongoosasticModel<Product>
+    PaginateModel<Product> & MongoosasticModel<Product>
 >(envV1.model.PRODUCT, ProductSchema);
 export default ProductModel;

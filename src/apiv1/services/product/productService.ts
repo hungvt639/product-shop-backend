@@ -52,17 +52,26 @@ class ProductService {
         if (!del) throw new Error("Xóa product không thành công");
     }
     public async edit(id: string, product) {
-        const color = await ProductModel.findOneAndUpdate(
-            { _id: id },
-            product,
-            {
-                new: true,
-            }
-        )
+        const p = await ProductModel.findOneAndUpdate({ _id: id }, product, {
+            new: true,
+        })
             .populate("type")
             .populate("colors");
-        if (!color) throw new Error("Không tìm thấy type có id là: " + id);
-        return color;
+        if (!p) throw new Error("Không tìm thấy sản phẩm có id là: " + id);
+        return p;
+    }
+
+    public async search(q: Querys, search) {
+        const data = await ProductModel.search(
+            {
+                query_string: {
+                    fields: ["name", "slug"],
+                    query: search,
+                },
+            },
+            { size: q.limit, from: (q.page - 1) * q.limit } as any
+        );
+        return data.body.hits;
     }
 }
 

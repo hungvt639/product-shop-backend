@@ -88,6 +88,12 @@ class ProductController {
         });
         HttpResponse.ok(res, product);
     }
+
+    public async search(req: Req, res: Res) {
+        const s = req.query.search as string | undefined;
+        const products = await productService.search(req.querys, s);
+        HttpResponse.ok(res, products);
+    }
 }
 
 export default new ProductController();

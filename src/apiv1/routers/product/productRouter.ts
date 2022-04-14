@@ -7,7 +7,7 @@ import PCtl from "../../controllers/product/productController";
 const pRoute = ROUTE.product;
 
 const ProductRouter = Router();
-
+ProductRouter.get(pRoute.search_product, _(PCtl.search));
 ProductRouter.get(pRoute.get_product_sale, _(PCtl.gets_sale));
 ProductRouter.get(pRoute.get_product, _(PCtl.get));
 ProductRouter.get(pRoute.get_list_product, _(PCtl.gets));

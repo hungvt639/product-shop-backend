@@ -65,6 +65,7 @@ export const ROUTE = {
         edit_product: "/:id",
         delete_product: "/:id",
         get_product: "/:slug",
+        search_product: "/search",
     },
     order: {
         root: "/order",
