@@ -2,24 +2,20 @@ import { isValidObjectId } from "mongoose";
 import envV1 from "../../config/_envV1";
 import { Req, Res } from "../../interfaces/Express";
 import orderService from "../../services/product/orderService";
-import {
-    removeKeyNull,
-    validateEmail,
-    validatePhone,
-} from "../../utils/functions";
+import Utils from "../../utils/functions";
 import HttpResponse from "../../utils/response";
 
 class OrderController {
     public async create(req: Req, res: Res) {
         const value = req.body;
 
-        if (!validatePhone(value.phone))
+        if (!Utils.validatePhone(value.phone))
             HttpResponse.badRequest(
                 res,
                 "Định dạng số điện thoại không hợp lệ"
             );
 
-        if (!validateEmail(value.email))
+        if (!Utils.validateEmail(value.email))
             HttpResponse.badRequest(res, "Định dạng email không hợp lệ");
 
         const data = await orderService.create(value);
@@ -30,7 +26,7 @@ class OrderController {
         const sort = req.query.sort as string | undefined;
         const stt = req.query.status as string | undefined;
         const status = stt ? parseInt(stt) : undefined;
-        const filter = removeKeyNull({ status });
+        const filter = Utils.removeKeyNull({ status });
         const datas = await orderService.gets(req.querys, filter, sort);
         HttpResponse.ok(res, datas);
     }

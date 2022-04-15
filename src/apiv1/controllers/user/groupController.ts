@@ -1,11 +1,11 @@
 import { Req, Res } from "../../interfaces/Express";
 import groupService from "../../services/user/groupService";
-import { removeKeyNull, validArrObjId } from "../../utils/functions";
+import Utils from "../../utils/functions";
 import HttpResponse from "../../utils/response";
 
 class GroupController {
     public async getGroups(req: Req, res: Res) {
-        const filter = removeKeyNull(req.query);
+        const filter = Utils.removeKeyNull(req.query);
         const groups = await groupService.getGroups(filter);
         HttpResponse.ok(res, groups);
     }
@@ -25,7 +25,7 @@ class GroupController {
     public async permissionOfGroup(req: Req, res: Res) {
         const { permissions } = req.body;
         const { id } = req.params;
-        if (!validArrObjId(permissions)) {
+        if (!Utils.validArrObjId(permissions)) {
             return HttpResponse.badRequest(
                 res,
                 "permissions không đúng định dạng ObjectId"

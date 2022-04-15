@@ -1,6 +1,6 @@
 import { Req, Res } from "../../interfaces/Express";
 import HttpResponse from "../../utils/response";
-import { removeKeyNull, validArrObjId } from "../../utils/functions";
+import Utils from "../../utils/functions";
 import { User } from "../../models/user/userModel";
 import userService from "../../services/user/userService";
 
@@ -37,7 +37,7 @@ class UserController {
 
     public async getListUser(req: Req, res: Res) {
         const select = req.query.select || "_id fullname username";
-        let filter = removeKeyNull(req.query);
+        let filter = Utils.removeKeyNull(req.query);
         const users = await userService.getListUser(filter, select);
         HttpResponse.ok(res, users);
     }
@@ -51,7 +51,7 @@ class UserController {
 
     public async editProfile(req: Req, res: Res) {
         const { fullname, avatar } = req.body;
-        const update = removeKeyNull({ fullname, avatar });
+        const update = Utils.removeKeyNull({ fullname, avatar });
         const user = await userService.editProfile(req.user._id, update);
         HttpResponse.ok(res, user);
     }
@@ -98,7 +98,7 @@ class UserController {
     public async updateGroupUser(req: Req, res: Res) {
         const { groups } = req.body;
         const { id } = req.params;
-        if (!validArrObjId(groups)) {
+        if (!Utils.validArrObjId(groups)) {
             return HttpResponse.badRequest(
                 res,
                 "groups không đúng định dạng ObjectId"

@@ -2,6 +2,7 @@ import { Req, Res } from "../../interfaces/Express";
 import { Product } from "../../models/product/productModel";
 import productService from "../../services/product/productService";
 import HttpResponse from "../../utils/response";
+import Utils from "../../utils/functions";
 
 class ProductController {
     public async create(req: Req, res: Res) {
@@ -35,8 +36,10 @@ class ProductController {
     }
 
     public async gets(req: Req, res: Res) {
+        const { type } = req.query;
+        const filter = Utils.removeKeyNull({ type });
         const sort = req.query.sort as string | undefined;
-        const datas = await productService.gets(req.querys, sort);
+        const datas = await productService.gets(filter, req.querys, sort);
         HttpResponse.ok(res, datas);
     }
     public async gets_sale(req: Req, res: Res) {

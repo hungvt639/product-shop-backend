@@ -1,5 +1,5 @@
 import env from "../../config/env";
-import { wordUpFirst } from "../utils/functions";
+import Utils from "../utils/functions";
 
 export const ROUTE = {
     user: {
@@ -110,7 +110,7 @@ export function generateListNamePermissions(): Urlstype {
     Object.keys(ROUTE).map((key) => {
         const route = ROUTE[key];
         return Object.keys(route).map((k) => {
-            PERsDefault[k] = wordUpFirst(k.split("_").join(" "));
+            PERsDefault[k] = Utils.wordUpFirst(k.split("_").join(" "));
             return route[k];
         });
     });

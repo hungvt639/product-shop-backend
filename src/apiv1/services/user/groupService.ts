@@ -1,6 +1,6 @@
 import GroupModel, { Group } from "../../models/user/groupModel";
 import PermissionModel from "../../models/user/permissionModel";
-import { validArrObjId } from "../../utils/functions";
+import Utils from "../../utils/functions";
 
 class GroupService {
     public async getGroups(filter) {
@@ -10,7 +10,7 @@ class GroupService {
     public async createGroup(name, permissions) {
         let perIds: String[] = [];
         if (permissions) {
-            if (!validArrObjId(permissions)) {
+            if (!Utils.validArrObjId(permissions)) {
                 throw new Error("permissions không đúng định dạng ObjectId");
             }
             const pers = await PermissionModel.find({

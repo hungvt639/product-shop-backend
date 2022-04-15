@@ -1,7 +1,7 @@
 import { Req, Res } from "../../interfaces/Express";
 import { generateURLs } from "../../routers/_const";
 import permissionService from "../../services/user/permissionService";
-import { removeKeyNull, valiDataPermission } from "../../utils/functions";
+import Utils from "../../utils/functions";
 import HttpResponse from "../../utils/response";
 
 class PermissionController {
@@ -12,7 +12,7 @@ class PermissionController {
 
     public async createPermission(req: Req, res: Res) {
         const { name, url, method } = req.body;
-        if (!valiDataPermission(method, url))
+        if (!Utils.valiDataPermission(method, url))
             return HttpResponse.badRequest(res, "Dữ liệu không chính xác");
         const permission = await permissionService.createPermission(
             name,
@@ -23,7 +23,7 @@ class PermissionController {
     }
 
     public async getListPermission(req: Req, res: Res) {
-        const filter = removeKeyNull(req.query);
+        const filter = Utils.removeKeyNull(req.query);
         const permission = await permissionService.getListPermission(filter);
         HttpResponse.ok(res, permission);
     }
@@ -37,8 +37,8 @@ class PermissionController {
     public async editPermission(req: Req, res: Res) {
         const { id } = req.params;
 
-        const data = removeKeyNull(req.body);
-        if (!valiDataPermission(data.method, data.url))
+        const data = Utils.removeKeyNull(req.body);
+        if (!Utils.valiDataPermission(data.method, data.url))
             return HttpResponse.badRequest(res, "Dữ liệu không chính xác");
         const permission = await permissionService.editPermission(id, data);
         return HttpResponse.ok(res, permission);

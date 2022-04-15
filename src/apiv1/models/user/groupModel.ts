@@ -1,5 +1,5 @@
 import mongoose, { Schema, SchemaDefinitionProperty } from "mongoose";
-import { convertCode } from "../../utils/functions";
+import Utils from "../../utils/functions";
 import envV1 from "../../config/_envV1";
 
 export class Group {
@@ -16,7 +16,7 @@ export class Group {
 
     constructor(name: string, per: String[]) {
         this.name = name;
-        this.code = convertCode(name).split(" ").join("_");
+        this.code = Utils.convertCode(name).split(" ").join("_");
         this.permissions = per;
     }
 }

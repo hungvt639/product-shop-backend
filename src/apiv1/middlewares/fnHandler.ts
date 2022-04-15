@@ -1,7 +1,6 @@
 import { RequestHandler } from "express";
 import env from "../../config/env";
 import { Req, Res, Next } from "../interfaces/Express";
-import { convertCode } from "../utils/functions";
 
 type FnRequestHandler = (req: Req, res: Res, next?: Next) => Promise<any>;
 

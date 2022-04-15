@@ -8,22 +8,19 @@ class ProductService {
         return await data.populate("colors");
     }
 
-    public async gets(options: Querys, sort: string) {
-        return await ProductModel.paginate(
-            {},
-            {
-                ...options,
-                sort,
-                populate: [
-                    {
-                        path: "type",
-                    },
-                    {
-                        path: "colors",
-                    },
-                ],
-            }
-        );
+    public async gets(filter: Object, options: Querys, sort: string) {
+        return await ProductModel.paginate(filter, {
+            ...options,
+            sort,
+            populate: [
+                {
+                    path: "type",
+                },
+                {
+                    path: "colors",
+                },
+            ],
+        });
     }
     public async gets_sale(options: Querys, sort: string) {
         return await ProductModel.paginate(

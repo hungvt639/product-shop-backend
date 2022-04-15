@@ -1,6 +1,6 @@
 import mongoose, { ObjectId, Schema, SchemaDefinitionProperty } from "mongoose";
 import envV1_1 from "../../config/_envV1";
-import { convertCode } from "../../utils/functions";
+import Utils from "../../utils/functions";
 export class Permission {
     _id?: ObjectId;
     name: SchemaDefinitionProperty<{
@@ -15,7 +15,7 @@ export class Permission {
     method: String;
     constructor(name: string, url: String, method: String) {
         this.name = name;
-        this.code = convertCode(name).split(" ").join("_");
+        this.code = Utils.convertCode(name).split(" ").join("_");
         this.url = url;
         this.method = method;
     }
