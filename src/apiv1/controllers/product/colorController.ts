@@ -7,28 +7,28 @@ class ColorController {
         const { name, code } = req.body;
         if (!colorService._validateCodeColor(code))
             throw new Error("Mã màu không hợp lệ");
-        const color = await colorService.create(name, code);
-        HttpResponse.ok(res, color);
+        const data = await colorService.create(name, code);
+        HttpResponse.ok(res, data);
     }
 
     public async gets(req: Req, res: Res) {
-        const colors = await colorService.gets();
-        HttpResponse.ok(res, colors);
+        const datas = await colorService.gets();
+        HttpResponse.ok(res, datas);
     }
 
-    public async deleteColor(req: Req, res: Res) {
+    public async del(req: Req, res: Res) {
         const { id } = req.params;
-        await colorService.deleteColor(id);
+        await colorService.del(id);
         HttpResponse.ok(res, { message: "Xóa color thành công" });
     }
 
-    public async editColor(req: Req, res: Res) {
+    public async edit(req: Req, res: Res) {
         const { id } = req.params;
         const { name, code } = req.body;
         if (!colorService._validateCodeColor(code))
             throw new Error("Mã màu không hợp lệ");
-        const color = await colorService.editColor(id, name, code);
-        HttpResponse.ok(res, color);
+        const data = await colorService.edit(id, name, code);
+        HttpResponse.ok(res, data);
     }
 }
 

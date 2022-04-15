@@ -5,18 +5,18 @@ import HttpResponse from "../../utils/response";
 class SizeController {
     public async create(req: Req, res: Res) {
         const { name } = req.body;
-        const size = await sizeService.create(name);
-        HttpResponse.ok(res, size);
+        const data = await sizeService.create(name);
+        HttpResponse.ok(res, data);
     }
 
     public async gets(req: Req, res: Res) {
-        const sizes = await sizeService.gets();
-        HttpResponse.ok(res, sizes);
+        const datas = await sizeService.gets();
+        HttpResponse.ok(res, datas);
     }
 
-    public async deleteSize(req: Req, res: Res) {
+    public async del(req: Req, res: Res) {
         const { id } = req.params;
-        await sizeService.deleteSize(id);
+        await sizeService.del(id);
         HttpResponse.ok(res, { message: "Xóa size thành công" });
     }
 }

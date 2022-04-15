@@ -3,9 +3,9 @@ import ProductModel, { Product } from "../../models/product/productModel";
 
 class ProductService {
     public async create(value: Product) {
-        const product = new ProductModel(value);
-        await product.save();
-        return await product.populate("colors");
+        const data = new ProductModel(value);
+        await data.save();
+        return await data.populate("colors");
     }
 
     public async gets(options: Querys, sort: string) {
@@ -47,18 +47,18 @@ class ProductService {
             .populate("type")
             .populate("colors");
     }
-    public async deleteP(id: string) {
+    public async del(id: string) {
         const del = await ProductModel.findByIdAndRemove(id);
         if (!del) throw new Error("Xóa product không thành công");
     }
     public async edit(id: string, product) {
-        const p = await ProductModel.findOneAndUpdate({ _id: id }, product, {
+        const data = await ProductModel.findOneAndUpdate({ _id: id }, product, {
             new: true,
         })
             .populate("type")
             .populate("colors");
-        if (!p) throw new Error("Không tìm thấy sản phẩm có id là: " + id);
-        return p;
+        if (!data) throw new Error("Không tìm thấy sản phẩm có id là: " + id);
+        return data;
     }
 
     public async search(q: Querys, search) {

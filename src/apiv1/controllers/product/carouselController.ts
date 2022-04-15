@@ -5,13 +5,13 @@ import HttpResponse from "../../utils/response";
 class CarouselController {
     public async create(req: Req, res: Res) {
         const { image } = req.body;
-        const color = await carouselService.create(image);
-        HttpResponse.ok(res, color);
+        const data = await carouselService.create(image);
+        HttpResponse.ok(res, data);
     }
 
     public async gets(req: Req, res: Res) {
-        const colors = await carouselService.gets();
-        HttpResponse.ok(res, colors);
+        const datas = await carouselService.gets();
+        HttpResponse.ok(res, datas);
     }
 
     public async del(req: Req, res: Res) {
@@ -23,8 +23,8 @@ class CarouselController {
     public async edit(req: Req, res: Res) {
         const { id } = req.params;
         const { image } = req.body;
-        const type = await carouselService.edit(id, image);
-        HttpResponse.ok(res, type);
+        const data = await carouselService.edit(id, image);
+        HttpResponse.ok(res, data);
     }
 }
 

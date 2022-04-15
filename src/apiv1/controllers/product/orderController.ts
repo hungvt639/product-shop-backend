@@ -11,19 +11,19 @@ import HttpResponse from "../../utils/response";
 
 class OrderController {
     public async create(req: Req, res: Res) {
-        const data = req.body;
+        const value = req.body;
 
-        if (!validatePhone(data.phone))
+        if (!validatePhone(value.phone))
             HttpResponse.badRequest(
                 res,
                 "Định dạng số điện thoại không hợp lệ"
             );
 
-        if (!validateEmail(data.email))
+        if (!validateEmail(value.email))
             HttpResponse.badRequest(res, "Định dạng email không hợp lệ");
 
-        const order = await orderService.create(data);
-        HttpResponse.ok(res, order);
+        const data = await orderService.create(value);
+        HttpResponse.ok(res, data);
     }
 
     public async gets(req: Req, res: Res) {
@@ -31,26 +31,26 @@ class OrderController {
         const stt = req.query.status as string | undefined;
         const status = stt ? parseInt(stt) : undefined;
         const filter = removeKeyNull({ status });
-        const orders = await orderService.gets(req.querys, filter, sort);
-        HttpResponse.ok(res, orders);
+        const datas = await orderService.gets(req.querys, filter, sort);
+        HttpResponse.ok(res, datas);
     }
 
     public async getDetail(req: Req, res: Res) {
         const { id } = req.params;
         if (!isValidObjectId(id))
             HttpResponse.badRequest(res, "Định dạng ID không đúng");
-        const orders = await orderService.getDetail(id);
-        HttpResponse.ok(res, orders);
+        const data = await orderService.getDetail(id);
+        HttpResponse.ok(res, data);
     }
 
     public async update(req: Req, res: Res) {
         const { id } = req.params;
         const { status, noteAdmin } = req.body;
-        const order = await orderService.update(id, {
+        const data = await orderService.update(id, {
             status,
             noteAdmin,
         });
-        HttpResponse.ok(res, order);
+        HttpResponse.ok(res, data);
     }
 }
 export default new OrderController();

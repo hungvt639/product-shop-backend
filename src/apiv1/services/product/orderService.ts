@@ -69,8 +69,6 @@ class OrderService {
     }
 
     public async gets(options: Querys, filter: Object, sort: string) {
-        console.log("f", filter);
-
         return await OrderModel.paginate(filter, {
             ...options,
             sort,
@@ -107,9 +105,9 @@ class OrderService {
     }
 
     public async getDetail(id: string) {
-        const order = await OrderModel.findById(id);
-        if (!order) throw new Error("Không tìm thấy đơn hàng có id là: " + id);
-        return order;
+        const data = await OrderModel.findById(id);
+        if (!data) throw new Error("Không tìm thấy đơn hàng có id là: " + id);
+        return data;
     }
 }
 

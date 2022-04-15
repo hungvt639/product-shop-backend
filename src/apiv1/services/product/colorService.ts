@@ -9,21 +9,20 @@ class ColorService {
         return await ColorModel.find({});
     }
 
-    public async deleteColor(id: string) {
-        const del = await ColorModel.deleteOne({ _id: id });
-        if (del.deletedCount <= 0)
-            throw new Error("Xóa color không thành công");
+    public async del(id: string) {
+        const data = await ColorModel.findByIdAndRemove(id);
+        if (!data) throw new Error("Xóa color không thành công");
     }
-    public async editColor(id: string, name: string, code: string) {
-        const color = await ColorModel.findOneAndUpdate(
-            { _id: id },
+    public async edit(id: string, name: string, code: string) {
+        const data = await ColorModel.findByIdAndUpdate(
+            id,
             { name, code },
             {
                 new: true,
             }
         );
-        if (!color) throw new Error("Không tìm thấy color có id là: " + id);
-        return color;
+        if (!data) throw new Error("Không tìm thấy color có id là: " + id);
+        return data;
     }
 
     public _validateCodeColor(code: string) {

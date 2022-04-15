@@ -18,7 +18,7 @@ class ProductController {
             information,
             sold,
         } = req.body;
-        const color = await productService.create({
+        const data = await productService.create({
             name,
             img,
             img1,
@@ -31,28 +31,28 @@ class ProductController {
             information,
             sold,
         } as Product);
-        HttpResponse.ok(res, color);
+        HttpResponse.ok(res, data);
     }
 
     public async gets(req: Req, res: Res) {
         const sort = req.query.sort as string | undefined;
-        const products = await productService.gets(req.querys, sort);
-        HttpResponse.ok(res, products);
+        const datas = await productService.gets(req.querys, sort);
+        HttpResponse.ok(res, datas);
     }
     public async gets_sale(req: Req, res: Res) {
         const sort = req.query.sort as string | undefined;
-        const products = await productService.gets_sale(req.querys, sort);
-        HttpResponse.ok(res, products);
+        const datas = await productService.gets_sale(req.querys, sort);
+        HttpResponse.ok(res, datas);
     }
     public async get(req: Req, res: Res) {
         const { slug } = req.params;
-        const products = await productService.get(slug);
-        HttpResponse.ok(res, products);
+        const data = await productService.get(slug);
+        HttpResponse.ok(res, data);
     }
 
-    public async deleteP(req: Req, res: Res) {
+    public async del(req: Req, res: Res) {
         const { id } = req.params;
-        await productService.deleteP(id);
+        await productService.del(id);
         HttpResponse.ok(res, { message: "Xóa product thành công" });
     }
 

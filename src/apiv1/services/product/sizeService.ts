@@ -9,9 +9,9 @@ class SizeService {
         return await SizeModel.find({});
     }
 
-    public async deleteSize(id: string) {
-        const del = await SizeModel.deleteOne({ _id: id });
-        if (del.deletedCount <= 0) throw new Error("Xóa size không thành công");
+    public async del(id: string) {
+        const data = await SizeModel.findByIdAndRemove(id);
+        if (!data) throw new Error("Xóa size không thành công");
     }
 }
 

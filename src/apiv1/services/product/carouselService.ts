@@ -14,15 +14,15 @@ class CarouselService {
         if (!del) throw new Error("Xóa carousel không thành công");
     }
     public async edit(id: string, image: string) {
-        const color = await CarouselModel.findByIdAndUpdate(
+        const data = await CarouselModel.findByIdAndUpdate(
             id,
             { image },
             {
                 new: true,
             }
         );
-        if (!color) throw new Error("Không tìm thấy carousel có id là: " + id);
-        return color;
+        if (!data) throw new Error("Không tìm thấy carousel có id là: " + id);
+        return data;
     }
 }
 

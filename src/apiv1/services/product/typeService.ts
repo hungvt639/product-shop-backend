@@ -9,20 +9,20 @@ class TypeService {
         return await TypeModel.find({});
     }
 
-    public async deleteType(id: string) {
-        const del = await TypeModel.deleteOne({ _id: id });
-        if (del.deletedCount <= 0) throw new Error("Xóa type không thành công");
+    public async del(id: string) {
+        const data = await TypeModel.findByIdAndRemove(id);
+        if (!data) throw new Error("Xóa type không thành công");
     }
-    public async editType(id: string, name: string) {
-        const color = await TypeModel.findOneAndUpdate(
-            { _id: id },
+    public async edit(id: string, name: string) {
+        const data = await TypeModel.findByIdAndUpdate(
+            id,
             { name },
             {
                 new: true,
             }
         );
-        if (!color) throw new Error("Không tìm thấy type có id là: " + id);
-        return color;
+        if (!data) throw new Error("Không tìm thấy type có id là: " + id);
+        return data;
     }
 }
 

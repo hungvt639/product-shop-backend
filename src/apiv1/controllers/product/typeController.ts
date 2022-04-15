@@ -10,21 +10,21 @@ class TypeController {
     }
 
     public async gets(req: Req, res: Res) {
-        const colors = await typeService.gets();
-        HttpResponse.ok(res, colors);
+        const datas = await typeService.gets();
+        HttpResponse.ok(res, datas);
     }
 
-    public async deleteType(req: Req, res: Res) {
+    public async del(req: Req, res: Res) {
         const { id } = req.params;
-        await typeService.deleteType(id);
-        HttpResponse.ok(res, { message: "Xóa type thành công" });
+        await typeService.del(id);
+        HttpResponse.ok(res, { message: "Xóa nhóm thành công" });
     }
 
-    public async editType(req: Req, res: Res) {
+    public async edit(req: Req, res: Res) {
         const { id } = req.params;
         const { name } = req.body;
-        const type = await typeService.editType(id, name);
-        HttpResponse.ok(res, type);
+        const data = await typeService.edit(id, name);
+        HttpResponse.ok(res, data);
     }
 }
 
