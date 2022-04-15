@@ -13,6 +13,6 @@ SizeRouter.use(role);
 
 SizeRouter.get(sizeRoute.get_list_size, _(SizeCtl.gets));
 SizeRouter.post(sizeRoute.create_size, _(SizeCtl.create));
-SizeRouter.delete(sizeRoute.delete_size, _(SizeCtl.deleteSize));
+SizeRouter.delete(sizeRoute.delete_size, _(SizeCtl.del));
 
 export default SizeRouter;

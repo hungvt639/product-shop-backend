@@ -13,7 +13,7 @@ ColorRouter.use(role);
 
 ColorRouter.get(colorRoute.get_list_color, _(ColorCtl.gets));
 ColorRouter.post(colorRoute.create_color, _(ColorCtl.create));
-ColorRouter.put(colorRoute.edit_color, _(ColorCtl.editColor));
-ColorRouter.delete(colorRoute.delete_color, _(ColorCtl.deleteColor));
+ColorRouter.put(colorRoute.edit_color, _(ColorCtl.edit));
+ColorRouter.delete(colorRoute.delete_color, _(ColorCtl.del));
 
 export default ColorRouter;

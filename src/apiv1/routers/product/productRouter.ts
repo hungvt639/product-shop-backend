@@ -16,6 +16,6 @@ ProductRouter.use(auth);
 ProductRouter.use(role);
 ProductRouter.post(pRoute.create_product, _(PCtl.create));
 ProductRouter.put(pRoute.edit_product, _(PCtl.edit));
-ProductRouter.delete(pRoute.delete_product, _(PCtl.deleteP));
+ProductRouter.delete(pRoute.delete_product, _(PCtl.del));
 
 export default ProductRouter;

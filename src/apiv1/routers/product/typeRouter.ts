@@ -14,7 +14,7 @@ TypeRouter.use(auth);
 TypeRouter.use(role);
 
 TypeRouter.post(typeRoute.create_type, _(TypeCtl.create));
-TypeRouter.put(typeRoute.edit_type, _(TypeCtl.editType));
-TypeRouter.delete(typeRoute.delete_type, _(TypeCtl.deleteType));
+TypeRouter.put(typeRoute.edit_type, _(TypeCtl.edit));
+TypeRouter.delete(typeRoute.delete_type, _(TypeCtl.del));
 
 export default TypeRouter;
