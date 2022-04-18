@@ -23,6 +23,8 @@ export interface Product extends Document, MongoosasticDocument {
     description?: String;
     information?: String;
     sold: number;
+    created_at: string;
+    updated_at: string;
 }
 
 mongoose.plugin(slug);

@@ -56,6 +56,8 @@ export const ROUTE = {
         create_type: "",
         edit_type: "/:id",
         delete_type: "/:id",
+        get_product: "/get-product",
+        get_type: "/:slug",
     },
     product: {
         root: "/product",

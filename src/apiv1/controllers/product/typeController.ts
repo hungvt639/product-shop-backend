@@ -26,6 +26,18 @@ class TypeController {
         const data = await typeService.edit(id, name);
         HttpResponse.ok(res, data);
     }
+
+    public async getsProducts(req: Req, res: Res) {
+        const sort = req.query.sort as string | undefined;
+        const datas = await typeService.getsProducts(req.querys, sort);
+        HttpResponse.ok(res, datas);
+    }
+    public async get(req: Req, res: Res) {
+        const { slug } = req.params;
+        const sort = req.query.sort as string | undefined;
+        const data = await typeService.get(slug, req.querys, sort);
+        HttpResponse.ok(res, data);
+    }
 }
 
 export default new TypeController();

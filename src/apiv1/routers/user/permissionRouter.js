@@ -1,0 +1,18 @@
+"use strict";
+exports.__esModule = true;
+var permissionController_1 = require("../../controllers/user/permissionController");
+var express_1 = require("express");
+var authentication_1 = require("../../middlewares/authentication");
+var fnHandler_1 = require("../../middlewares/fnHandler");
+var role_1 = require("../../middlewares/role");
+var _const_1 = require("../_const");
+var pRoute = _const_1.ROUTE.permission;
+var PerRouter = (0, express_1.Router)();
+PerRouter.use(authentication_1["default"]);
+PerRouter.use(role_1["default"]);
+PerRouter.post(pRoute.create_per, (0, fnHandler_1["default"])(permissionController_1["default"].createPermission));
+PerRouter.get(pRoute.list_per, (0, fnHandler_1["default"])(permissionController_1["default"].getListPermission));
+PerRouter.put(pRoute.edit_per, (0, fnHandler_1["default"])(permissionController_1["default"].editPermission));
+PerRouter["delete"](pRoute.delete_per, (0, fnHandler_1["default"])(permissionController_1["default"].deletePermission));
+PerRouter.get(pRoute.list_url, (0, fnHandler_1["default"])(permissionController_1["default"].getListUrl));
+exports["default"] = PerRouter;

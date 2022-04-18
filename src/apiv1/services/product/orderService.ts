@@ -59,7 +59,7 @@ class OrderService {
                     template: "order",
                     context: {
                         message: "Đơn hàng của bạn đã được đặt thành công",
-                        href: `${env.FRONTEND}/${envV1.r.order_detail}?${envV1.query.order_detail}=${order._id}`,
+                        href: `${env.FRONTEND}/${envV1.r.order_detail}/${order._id}`,
                     },
                 });
             } catch {}

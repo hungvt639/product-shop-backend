@@ -39,10 +39,18 @@ class ProductService {
             }
         );
     }
-    public async get(slug: string) {
-        return await ProductModel.findOne({ slug: slug })
+    public async get(s: string) {
+        const product = await ProductModel.findOne({ slug: s })
             .populate("type")
             .populate("colors");
+        const { type }: any = product;
+        const sames = await ProductModel.find(
+            { type: type._id, _id: { $ne: product._id } },
+            "_id name slug sold price img img1 isSale"
+        )
+            .sort({ sold: -1 })
+            .limit(5);
+        return { ...product.toJSON(), sames };
     }
     public async del(id: string) {
         const del = await ProductModel.findByIdAndRemove(id);

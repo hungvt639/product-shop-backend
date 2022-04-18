@@ -8,6 +8,8 @@ const typeRoute = ROUTE.type;
 
 const TypeRouter = Router();
 
+TypeRouter.get(typeRoute.get_product, _(TypeCtl.getsProducts));
+TypeRouter.get(typeRoute.get_type, _(TypeCtl.get));
 TypeRouter.get(typeRoute.get_list_type, _(TypeCtl.gets));
 
 TypeRouter.use(auth);

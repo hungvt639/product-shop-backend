@@ -20,7 +20,7 @@ const envV1 = {
         "image/x-icon",
     ],
     r: {
-        order_detail: "order-detail",
+        order_detail: "order",
         activate_user: "activate-user",
         reset_password: "reset-password",
     },
