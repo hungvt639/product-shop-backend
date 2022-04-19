@@ -49,7 +49,10 @@ class OrderService {
                 return proOrder;
             })
         );
-        const price = orderProduct.reduce((a, b) => a + b.product.price, 0);
+        const price = orderProduct.reduce(
+            (a, b) => a + b.product.price * b.amount,
+            0
+        );
         const order = await OrderModel.create({ ...data, price, orderProduct });
         if (order.email) {
             try {
