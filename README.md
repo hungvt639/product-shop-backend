@@ -1,1 +1,6 @@
 # api-auth-permission
+
+MONGO_DB
+GMAIL
+ELASTICSEARCH
+IMGUR

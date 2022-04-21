@@ -10,7 +10,12 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "lib": ["es2015", "es5", "es6"],
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+        "removeComments": true,
+        "noImplicitAny": false,
+        "typeRoots": ["./node_modules/@types"]
     },
 
     "files": ["src/apiv1/interfaces/custom.d.ts"]

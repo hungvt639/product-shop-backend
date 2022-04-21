@@ -83,6 +83,12 @@ export const ROUTE = {
         edit_carousel: "/:id",
         delete_carousel: "/:id",
     },
+    country: {
+        root: "/countries",
+        get_provincials: "/provincials",
+        get_districts: "/districts/:province",
+        get_wards: "/wards/:district",
+    },
 };
 type Urlstype = typeof ROUTE.user &
     typeof ROUTE.permission &
@@ -93,7 +99,8 @@ type Urlstype = typeof ROUTE.user &
     typeof ROUTE.type &
     typeof ROUTE.product &
     typeof ROUTE.order &
-    typeof ROUTE.carousel;
+    typeof ROUTE.carousel &
+    typeof ROUTE.country;
 
 export function generateURLs(): Urlstype {
     let URLs: any = {};
