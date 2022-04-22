@@ -80,6 +80,20 @@ export const PER: Permission[] = [
         URLs.delete_carousel,
         METHOD.DELETE
     ),
+
+    new Permission(
+        persName.get_list_blog_link,
+        URLs.get_list_blog_link,
+        METHOD.GET
+    ),
+    new Permission(persName.get_blog_link, URLs.get_blog_link, METHOD.GET),
+    new Permission(persName.creat_blog_link, URLs.creat_blog_link, METHOD.POST),
+    new Permission(persName.edit_blog_link, URLs.edit_blog_link, METHOD.PUT),
+    new Permission(
+        persName.delete_blog_link,
+        URLs.delete_blog_link,
+        METHOD.DELETE
+    ),
 ];
 export const GROUP = {
     superAdmin: {
@@ -135,6 +149,12 @@ export const GROUP = {
             persName.create_carousel,
             persName.edit_carousel,
             persName.delete_carousel,
+
+            persName.get_list_blog_link,
+            persName.get_blog_link,
+            persName.creat_blog_link,
+            persName.edit_blog_link,
+            persName.delete_blog_link,
         ],
     },
     user: {

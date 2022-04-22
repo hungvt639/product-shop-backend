@@ -3,11 +3,10 @@ import ApiV1 from "./apiv1/routers";
 import express from "express";
 import morgan from "./utils/morgan";
 import * as path from "path";
-import connect from "./config/mongodb";
+import ConnectMongoose from "./config/mongodb";
 import bodyParser from "body-parser";
 import env from "./config/env";
 import cors from "cors";
-import dataApiV1 from "./apiv1/config/data";
 import { generator } from "./utils/morgan";
 import * as rfs from "rotating-file-stream";
 
@@ -32,7 +31,6 @@ app.use(cors({ origin: env.CORS_ORIGIN }));
 app.use(env.APIV1, ApiV1);
 
 app.listen(env.PORT, async () => {
-    await connect();
-    await dataApiV1();
+    await ConnectMongoose.connect();
     console.log(`App listening at http://0.0.0.0:${env.PORT}`);
 });

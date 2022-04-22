@@ -9,6 +9,7 @@ const envV1 = {
         PRODUCT: "product",
         ORDER: "order",
         CAROUSE: "carousel",
+        BLOG_LINK: "blog_link",
     },
 
     MIMETYPEs: [

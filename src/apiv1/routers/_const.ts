@@ -89,6 +89,14 @@ export const ROUTE = {
         get_districts: "/districts/:province",
         get_wards: "/wards/:district",
     },
+    blog_link: {
+        root: "/blog-link",
+        get_list_blog_link: "",
+        get_blog_link: "/:slug",
+        creat_blog_link: "",
+        edit_blog_link: "/:id",
+        delete_blog_link: "/:id",
+    },
 };
 type Urlstype = typeof ROUTE.user &
     typeof ROUTE.permission &
@@ -100,7 +108,8 @@ type Urlstype = typeof ROUTE.user &
     typeof ROUTE.product &
     typeof ROUTE.order &
     typeof ROUTE.carousel &
-    typeof ROUTE.country;
+    typeof ROUTE.country &
+    typeof ROUTE.blog_link;
 
 export function generateURLs(): Urlstype {
     let URLs: any = {};

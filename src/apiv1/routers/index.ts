@@ -13,6 +13,7 @@ import ProductRouter from "./product/productRouter";
 import OrderRouter from "./product/orderRouter";
 import CarouselRouter from "./product/carouselRouter";
 import CountryRouter from "./countriesRouter";
+import BlogLinkRouter from "./blogLinkRouter";
 
 const ApiV1 = Router();
 
@@ -27,6 +28,7 @@ ApiV1.use(ROUTE.product.root, ProductRouter);
 ApiV1.use(ROUTE.carousel.root, CarouselRouter);
 ApiV1.use(ROUTE.order.root, OrderRouter);
 ApiV1.use(ROUTE.country.root, CountryRouter);
+ApiV1.use(ROUTE.blog_link.root, BlogLinkRouter);
 
 ApiV1.use(errorHandler);
 export default ApiV1;

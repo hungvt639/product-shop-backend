@@ -5,6 +5,7 @@
     "main": "dist/index.js",
     "scripts": {
         "start": "nodemon",
+        "data": "ts-node ./src/_data.ts",
         "dev": "nodemon",
         "dev:local": "env-cmd -f .env.local nodemon",
         "build": "tsc"

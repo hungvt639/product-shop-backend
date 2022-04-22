@@ -43,6 +43,7 @@ class ProductService {
         const product = await ProductModel.findOne({ slug: s })
             .populate("type")
             .populate("colors");
+        if (!product) throw new Error("Không tìm thấy sản phẩm");
         const { type }: any = product;
         const sames = await ProductModel.find(
             { type: type._id, _id: { $ne: product._id } },

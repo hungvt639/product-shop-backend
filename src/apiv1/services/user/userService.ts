@@ -5,7 +5,7 @@ import { SchemaDefinitionProperty } from "mongoose";
 import UserModel, { User } from "../../models/user/userModel";
 import SendMail from "../../utils/sendEmail";
 import GroupModel from "../../models/user/groupModel";
-import { GROUP } from "../../config/data";
+import { GROUP } from "../../_data/data";
 import envV1 from "../../config/_envV1";
 
 class UserService {

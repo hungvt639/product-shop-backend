@@ -1,8 +1,15 @@
 import mongoose from "mongoose";
 import env from "./env";
 
-async function connect() {
-    await mongoose.connect(env.MONGO_DB);
-    console.log("Connect OK");
+class ConnectMongoose {
+    public async connect() {
+        await mongoose.connect(env.MONGO_DB);
+        console.log("___Connect MongoDB___");
+    }
+    public async disConnet() {
+        await mongoose.disconnect();
+        console.log("___Disconent MongoDB___");
+    }
 }
-export default connect;
+
+export default new ConnectMongoose();
