@@ -80,28 +80,33 @@ class OrderService {
     public async update(id: string, { status, noteAdmin }) {
         const order = await OrderModel.findById(id);
         if (!order) throw new Error("Không tìm thấy đơn hàng có id là: " + id);
-        let isPlus = 0;
-        if (
-            order.status === StatusOrder["Đã nhận hàng"] &&
-            status !== order.status
-        )
-            isPlus = -1;
-        if (
-            order.status !== StatusOrder["Đã nhận hàng"] &&
-            status === StatusOrder["Đã nhận hàng"]
-        )
-            isPlus = 1;
-        if (isPlus) {
-            await Promise.all(
-                order.orderProduct.map(async (op) => {
-                    const product = await ProductModel.findById(op.product._id);
-                    product.sold += isPlus * op.amount;
-                    await product.save();
-                })
-            );
+
+        if (status) {
+            let isPlus = 0;
+            if (
+                order.status === StatusOrder["Đã nhận hàng"] &&
+                status !== order.status
+            )
+                isPlus = -1;
+            if (
+                order.status !== StatusOrder["Đã nhận hàng"] &&
+                status === StatusOrder["Đã nhận hàng"]
+            )
+                isPlus = 1;
+            if (isPlus) {
+                await Promise.all(
+                    order.orderProduct.map(async (op) => {
+                        const product = await ProductModel.findById(
+                            op.product._id
+                        );
+                        product.sold += isPlus * op.amount;
+                        await product.save();
+                    })
+                );
+            }
+            order.status = status;
         }
-        order.status = status;
-        order.noteAdmin = noteAdmin;
+        if (noteAdmin) order.noteAdmin = noteAdmin;
         await order.save();
         return order;
     }
