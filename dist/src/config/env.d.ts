@@ -1,0 +1,23 @@
+declare const _default: {
+    NODE_ENV: string;
+    PORT: string | number;
+    MONGO_DB: string;
+    SECRET: string;
+    SECRET_ACTIVATE_USER: string;
+    SECRET_RESET_PASSWORD: string;
+    AVATAR_DEFAULT: string;
+    PAGE_DEFAULT: string;
+    LIMIT_DEFAULT: string;
+    EMAIL_HOST: string;
+    EMAIL_USER: string;
+    EMAIL_PASSWORD: string;
+    EMAIL_PORT: number;
+    SHIP: number;
+    ECONNREFUSED: string;
+    CORS_ORIGIN: RegExp[];
+    FRONTEND: string;
+    IMGUR_ID: string;
+    APIV1: string;
+    SHOP_NAME: string;
+};
+export default _default;
