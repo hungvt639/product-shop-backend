@@ -15,10 +15,10 @@ export type OptionEmail = {
 
 const handlebarOptions = {
     viewEngine: {
-        partialsDir: path.resolve("src", "apiv1", "template"),
+        partialsDir: path.resolve("template"),
         defaultLayout: false,
     },
-    viewPath: path.resolve("src", "apiv1", "template"),
+    viewPath: path.resolve("template"),
 };
 
 smtp.use("compile", hbs(handlebarOptions));
