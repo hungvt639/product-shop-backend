@@ -1,22 +1,21 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "esModuleInterop": true,
-        "target": "es6",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "outDir": "dist",
-        "rootDir": "./src",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "lib": ["es2015", "es5", "es6"],
-        "resolveJsonModule": true,
-        "allowSyntheticDefaultImports": true,
+        "strictPropertyInitialization": false,
+        "target": "es6" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
+        "module": "commonjs" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
         "allowJs": true,
-        "removeComments": true,
-        "noImplicitAny": false,
-        "typeRoots": ["./node_modules/@types"]
+        "declaration": true /* Generates corresponding '.d.ts' file. */,
+        "outDir": "./dist/" /* Redirect output structure to the directory. */,
+        "rootDir": "." /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */,
+        "strict": false /* Enable all strict type-checking options. */,
+        "noImplicitAny": false /* Raise error on expressions and declarations with an implied 'any' type. */,
+        "typeRoots": ["node_modules/@types"],
+        "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
+        "skipLibCheck": true /* Skip type checking of declaration files. */,
+        "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
+        "resolveJsonModule": true
     },
-
-    "files": ["src/apiv1/interfaces/custom.d.ts"]
+    "files": ["src/apiv1/interfaces/custom.d.ts"],
+    "include": ["./**/*.ts"],
+    "exclude": ["node_modules", "dist"]
 }

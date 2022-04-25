@@ -67,7 +67,7 @@ class ProductService {
         return data;
     }
 
-    public async search(q: Querys, search) {
+    public async search(q: Querys, search): Promise<any> {
         const data = await ProductModel.search(
             {
                 query_string: {
