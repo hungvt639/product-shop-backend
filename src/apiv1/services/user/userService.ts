@@ -65,7 +65,7 @@ class UserService {
         if (!user.isActivate) {
             throw new Error("Tài khoản chưa được kích hoạt");
         }
-        const match = await bcrypt.compare(password, user.password);
+        const match = await bcrypt.compare(password, user.password as string);
         if (!match) {
             throw new Error("Sai tên tài khoản hoặc mật khẩu!");
         }
