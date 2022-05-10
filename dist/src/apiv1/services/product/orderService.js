@@ -43,18 +43,8 @@ class OrderService {
                 const product = yield productModel_1.default.findOne({ _id: op.product_id, isSale: true }, "_id name slug img img1 price sizes colors type").populate({ path: "type", select: "name" });
                 if (!product)
                     throw new Error("Đơn hàng có chứa sản phầm không còn được bán");
-                const { _id, name, slug, img, img1, price, sizes, colors, type, } = product;
-                const proOrder = Object.assign(Object.assign({}, op), { product: {
-                        _id,
-                        name,
-                        slug,
-                        img,
-                        img1,
-                        price,
-                        sizes,
-                        colors,
-                        type: type.name,
-                    } });
+                const type = product.type;
+                const proOrder = Object.assign(Object.assign({}, op), { product: Object.assign(Object.assign({}, product.toJSON()), { type: type.name }) });
                 delete proOrder["product_id"];
                 return proOrder;
             })));
@@ -103,6 +93,20 @@ class OrderService {
                         product.sold += isPlus * op.amount;
                         yield product.save();
                     })));
+                }
+                if (order.email) {
+                    try {
+                        yield (0, sendEmail_1.default)({
+                            to: order.email,
+                            subject: `Đặt đơn shop ${env_1.default.SHOP_NAME}`,
+                            template: "order",
+                            context: {
+                                message: "Đơn hàng của bạn đã được cập nhật",
+                                href: `${env_1.default.FRONTEND}/${_envV1_1.default.r.order_detail}/${order._id}`,
+                            },
+                        });
+                    }
+                    catch (_a) { }
                 }
                 order.status = status;
             }
