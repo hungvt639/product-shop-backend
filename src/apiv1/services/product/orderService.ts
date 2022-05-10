@@ -11,7 +11,7 @@ class OrderService {
     public async create(data) {
         const orderProduct = await Promise.all(
             data.orderProducts.map(async (op) => {
-                const product: any = await ProductModel.findOne(
+                const product = await ProductModel.findOne(
                     { _id: op.product_id, isSale: true },
                     "_id name slug img img1 price sizes colors type"
                 ).populate({ path: "type", select: "name" });
@@ -19,28 +19,11 @@ class OrderService {
                     throw new Error(
                         "Đơn hàng có chứa sản phầm không còn được bán"
                     );
-                const {
-                    _id,
-                    name,
-                    slug,
-                    img,
-                    img1,
-                    price,
-                    sizes,
-                    colors,
-                    type,
-                } = product;
+                const type: any = product.type;
                 const proOrder = {
                     ...op,
                     product: {
-                        _id,
-                        name,
-                        slug,
-                        img,
-                        img1,
-                        price,
-                        sizes,
-                        colors,
+                        ...product.toJSON(),
                         type: type.name,
                     },
                 };
@@ -103,6 +86,19 @@ class OrderService {
                         await product.save();
                     })
                 );
+            }
+            if (order.email) {
+                try {
+                    await SendMail({
+                        to: order.email as string,
+                        subject: `Đặt đơn shop ${env.SHOP_NAME}`,
+                        template: "order",
+                        context: {
+                            message: "Đơn hàng của bạn đã được cập nhật",
+                            href: `${env.FRONTEND}/${envV1.r.order_detail}/${order._id}`,
+                        },
+                    });
+                } catch {}
             }
             order.status = status;
         }
